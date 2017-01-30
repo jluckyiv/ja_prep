@@ -10,10 +10,17 @@ var getUrl = function(url, callback) {
 }
 
 var extractHearingType = function(hearingRow) {
-  return hearingRow.querySelectorAll('td')[4].textContent.trim();
+  return hearingRow
+    .querySelectorAll('td')[4]
+    .textContent
+    .trim();
 };
 var extractCaseReportLink = function(hearingRow) {
-  return hearingRow.querySelectorAll('td')[2].querySelector('a').href.replace('criminalcalendar', 'criminalcasereport');
+  return hearingRow
+    .querySelectorAll('td')[2]
+    .querySelector('a')
+    .href
+    .replace('criminalcalendar', 'criminalcasereport');
 };
 var isPrelim = function(hearingRow) {
   return extractHearingType(hearingRow) == "PRELIMINARY HEARING";
@@ -37,5 +44,6 @@ var filterPrelims = function(hearings) {
 var hearings = extractHearings();
 var prelims = filterPrelims(hearings);
 var prelimLinks = prelims.forEach(extractCaseReportLink);
+
 console.log("There are " + hearings.length + " hearings.");
 console.log("There are " + prelims.length + " prelims.");
