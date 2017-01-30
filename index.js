@@ -10,6 +10,7 @@ var extractHearings = function() {
   for (var i = 0, l = hearingNodes.length; i < l; i += 1) {
     hearings[hearings.length] = hearingNodes[i];
   };
+  return hearings;
 };
 var hearings = extractHearings();
 var prelims = hearings.filter(isPrelim);
