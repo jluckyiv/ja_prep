@@ -75,7 +75,7 @@ prelims.forEach(function(prelim) {
   var caseNumber = extractCaseNumber(prelim);
   var link = extractCaseReportLink(prelim);
   getUrl(link, function() {
-    console.log(caseNumber " disclosure = " hasDisclosure(this.responseText));
+    console.log(caseNumber + " disclosure = " + hasDisclosure(this.responseText));
   });
 });
 
