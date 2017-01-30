@@ -56,10 +56,12 @@ var filterPrelims = function(hearings) {
 var hearings = extractHearings();
 var prelims = filterPrelims(hearings);
 var prelimLinks = prelims.map(extractCaseReportLink);
-var disclosures = prelimLinks.map(function(link) {
-  getUrl(link, hasDisclosure(this.responseText));
-});
+
+prelimLinks.forEach(function(link) {
+  getUrl(link, function() {
+    console.log(hasDisclosure(this.responseText));
+  }
+  )});
 
 console.log("There are " + hearings.length + " hearings.");
 console.log("There are " + prelims.length + " prelims.");
-console.log(disclosures);
