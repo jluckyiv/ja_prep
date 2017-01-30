@@ -1,3 +1,3 @@
 var container = document.getElementById('elm-container');
-Elm.embed(Elm.App, container);
+Elm.App.embed(container);
 
