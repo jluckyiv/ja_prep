@@ -29,8 +29,19 @@ var extractCaseReportLink = function(hearingRow) {
     .replace('criminalcalendar', 'criminalcasereport');
 };
 
+var extractCaseNumber = function(hearingRow) {
+  return hearingRow
+    .querySelectorAll('td')[2]
+    .textContent
+    .trim();
+};
+
 var isPrelim = function(hearingRow) {
   return extractHearingType(hearingRow) == "PRELIMINARY HEARING";
+};
+
+var isArraignment = function(hearingRow) {
+  return extractHearingType(hearingRow).includes("ARRAIGNMENT");
 };
 
 var hearingNodes = function() {
@@ -53,15 +64,29 @@ var filterPrelims = function(hearings) {
   return hearings.filter(isPrelim);
 };
 
-var hearings = extractHearings();
-var prelims = filterPrelims(hearings);
-var prelimLinks = prelims.map(extractCaseReportLink);
+var filterArraignments = function(hearings) {
+  return hearings.filter(isArraignment);
+};
 
-prelimLinks.forEach(function(link) {
+var hearings = extractHearings();
+
+var prelims = filterPrelims(hearings);
+prelims.forEach(function(prelim) {
+  var caseNumber = extractCaseNumber(prelim);
+  var link = extractCaseReportLink(prelim);
   getUrl(link, function() {
-    console.log(hasDisclosure(this.responseText));
-  }
-  )});
+    console.log(caseNumber " disclosure = " hasDisclosure(this.responseText));
+  });
+});
+
+var arraignments = filterArraignments(hearings);
+arraignments.forEach(function(arraignment) {
+  var caseNumber = extractCaseNumber(arraignment);
+  var link = extractCaseReportLink(arraignment);
+  getUrl(link, function() {
+    console.log(caseNumber " disclosure = " hasDisclosure(this.responseText));
+  });
+});
 
 console.log("There are " + hearings.length + " hearings.");
 console.log("There are " + prelims.length + " prelims.");
