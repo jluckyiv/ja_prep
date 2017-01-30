@@ -4,7 +4,14 @@ var extractHearingType = function(hearingRow) {
 var isPrelim = function(hearingRow) {
   return extractHearingType(hearingRow) == "PRELIMINARY HEARING";
 };
-var hearings = document.querySelectorAll('tr[id^="tr_row"]');
+var extractHearings = function() {
+  var hearings = [];
+  var hearingNodes = document.querySelectorAll('tr[id^="tr_row"]');
+  for (var i = 0, l = hearingNodes.length; i < l; i += 1) {
+    hearings[hearings.length] = hearingNodes[i];
+  };
+};
+var hearings = extractHearings();
 var prelims = hearings.filter(isPrelim);
 console.log("There are " + hearings.length + " hearings.");
 console.log("There are " + prelims.length + " prelims.");
