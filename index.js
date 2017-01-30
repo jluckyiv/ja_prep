@@ -17,10 +17,10 @@ var nodeListToArray = function(nodeList) {
 var extractHearings = function() {
   return nodeListToArray(hearingNodes());
 };
-var extractPrelims = function(hearings) {
+var filterPrelims = function(hearings) {
   return hearings.filter(isPrelim);
 };
 var hearings = extractHearings();
-var prelims = extractPrelims;
+var prelims = filterPrelims(hearings);
 console.log("There are " + hearings.length + " hearings.");
 console.log("There are " + prelims.length + " prelims.");
