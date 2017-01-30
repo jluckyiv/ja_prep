@@ -62,3 +62,4 @@ var disclosures = prelimLinks.map(function(link) {
 
 console.log("There are " + hearings.length + " hearings.");
 console.log("There are " + prelims.length + " prelims.");
+console.log(disclosures);
