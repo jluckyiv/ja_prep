@@ -34,7 +34,7 @@ var filterPrelims = function(hearings) {
 };
 var hearings = extractHearings();
 var prelims = filterPrelims(hearings);
-var prelimLinks = prelims.forEach(extractCaseReportLink(element));
+var prelimLinks = prelims.forEach(extractCaseReportLink);
 console.log("There are " + hearings.length + " hearings.");
 console.log("There are " + prelims.length + " prelims.");
 console.log(prelimLinks);
