@@ -21,6 +21,13 @@ var extractHearingType = function(hearingRow) {
     .trim();
 };
 
+var extractName = function(hearingRow) {
+  return hearingRow
+    .querySelectorAll('td')[3]
+    .textContent
+    .trim();
+};
+
 var extractCaseReportLink = function(hearingRow) {
   return hearingRow
     .querySelectorAll('td')[2]
@@ -73,18 +80,20 @@ var hearings = extractHearings();
 var prelims = filterPrelims(hearings);
 prelims.forEach(function(prelim) {
   var caseNumber = extractCaseNumber(prelim);
+  var name = extractName(prelim);
   var link = extractCaseReportLink(prelim);
   getUrl(link, function() {
-    console.log(caseNumber + " disclosure = " + hasDisclosure(this.responseText));
+    console.log(caseNumber + " " + name + " disclosure = " + hasDisclosure(this.responseText));
   });
 });
 
 var arraignments = filterArraignments(hearings);
 arraignments.forEach(function(arraignment) {
   var caseNumber = extractCaseNumber(arraignment);
+  var name = extractName(arraignment);
   var link = extractCaseReportLink(arraignment);
   getUrl(link, function() {
-    console.log(caseNumber + " disclosure = " + hasDisclosure(this.responseText));
+    console.log(caseNumber + " " + name + " disclosure = " + hasDisclosure(this.responseText));
   });
 });
 
