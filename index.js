@@ -55,7 +55,7 @@ var filterPrelims = function(hearings) {
 
 var hearings = extractHearings();
 var prelims = filterPrelims(hearings);
-var prelimLinks = prelims.forEach(extractCaseReportLink);
+var prelimLinks = prelims.map(extractCaseReportLink);
 prelimLinks.forEach(function(link) {
   getUrl(link, hasDisclosure(this.responseText));
 });
