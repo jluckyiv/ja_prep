@@ -9,7 +9,9 @@ var extractHearingType = function(hearingRow) {
   return hearingRow.querySelectorAll('td')[4].textContent.trim();
 };
 var extractCaseReportLink = function(hearingRow) {
-  return hearingRow.querySelectorAll('td')[2].querySelector('a').href.replace('criminalcalendar', 'criminalcasereport');
+  var link = hearingRow.querySelectorAll('td')[2].querySelector('a').href.replace('criminalcalendar', 'criminalcasereport');
+  console.log(link);
+  return link;
 };
 var isPrelim = function(hearingRow) {
   return extractHearingType(hearingRow) == "PRELIMINARY HEARING";
