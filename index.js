@@ -84,7 +84,7 @@ arraignments.forEach(function(arraignment) {
   var caseNumber = extractCaseNumber(arraignment);
   var link = extractCaseReportLink(arraignment);
   getUrl(link, function() {
-    console.log(caseNumber " disclosure = " hasDisclosure(this.responseText));
+    console.log(caseNumber + " disclosure = " + hasDisclosure(this.responseText));
   });
 });
 
