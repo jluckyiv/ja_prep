@@ -9,9 +9,13 @@ var getUrl = function(url, callback) {
   oReq.send();
 }
 
+var needsDisclosure = function(text) {
+  return !hasDisclosure(text);
+};
 var hasDisclosure = function(text) {
   // var text = document.body.textContent;
-  return text.includes("DISCLOSURE FILED") || text.includes("COURT DISCLOSES");
+  return text.includes("DISCLOSURE FILED") 
+    || text.includes("COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
 };
 
 var extractHearingType = function(hearingRow) {

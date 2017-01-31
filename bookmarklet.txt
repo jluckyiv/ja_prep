@@ -1,0 +1,1 @@
+javascript:(function()%7Bdocument.getElementsByTagName(%22body%22)%5B0%5D.appendChild(document.createElement(%22script%22)).src%3D%22https%3A%2F%2Frawgit.com%2Fjluckyiv%2Fja_prep%2Fmaster%2Fbundle.js%22%2BMath.random()%3B%7D)()

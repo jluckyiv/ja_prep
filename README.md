@@ -1,18 +1,29 @@
 # ja_prep
 prepping ja calendars
 
-## Creating the bookmarklet
+## Creating the bookmarklet for WebPack build
+```javascript
+javascript:(function(){
+    document.getElementsByTagName('body')[0]
+    .appendChild(document.createElement('script'))
+    .src='https://rawgit.com/jluckyiv/ja_prep/master/bundle.js'+Math.random();
+}());
+```
+## Creating the bookmarklet with Elm
 
 ```javascript
-javascript: (function () {
-  var app = document.createElement('script');
-  app.setAttribute('src', 'https://rawgit.com/jluckyiv/ja_prep/master/elm.js');
-  document.body.appendChild(app);
-  var elmContainer = document.createElement('div');
-  elmContainer.setAttribute('id', 'elm-container');
-  var embed = document.createElement('script');
-  embed.setAttribute('src', 'https://rawgit.com/jluckyiv/ja_prep/master/embed.js');
-  elmContainer.appendChild(embed);
-  document.body.appendChild(elmContainer);
-}());
+javascript:(function() {
+  var elmDiv = document.createElement("div");
+  elmDiv.id="elm";
+
+  var elmJs = document.createElement("script");
+  elmJs.src="https://rawgit.com/jluckyiv/ja_prep/master/elm.js";
+  elmJs.onload=function() {
+     var node = document.getElementById('elm');
+     Elm.App.embed(node);
+  };
+
+  document.body.appendChild(elmDiv);
+  document.body.appendChild(elmJs);
+})()
 ```
