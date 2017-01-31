@@ -1,0 +1,25 @@
+{
+  "name": "ja_prep",
+  "version": "0.0.1",
+  "description": "to prepare judicial access calendars",
+  "main": "index.js",
+  "dependencies": {
+    "webpack": "^2.2.1"
+  },
+  "devDependencies": {
+    "webpack": "^2.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jluckyiv/ja_prep.git"
+  },
+  "author": "Jackson Lucky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jluckyiv/ja_prep/issues"
+  },
+  "homepage": "https://github.com/jluckyiv/ja_prep#readme"
+}
