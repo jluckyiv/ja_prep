@@ -63,12 +63,42 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return extractHearings; });
+var nodeListToArray = function(nodeList) {
+  var a = [];
+  for (var i = 0, l = nodeList.length; i < l; i += 1) {
+    a[a.length] = nodeList[i];
+  };
+  return a;
+};
+
+var hearingNodes = function(node) {
+  return document.querySelectorAll('tr[id^="tr_row"]');
+};
+
+var extractHearings = function(node) {
+  return nodeListToArray(hearingNodes(node));
+};
+
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__calendar__ = __webpack_require__(0);
+
 
 var reqListener = function () {
   console.log(this.responseText);
@@ -139,10 +169,6 @@ var nodeListToArray = function(nodeList) {
   return a;
 };
 
-var extractHearings = function() {
-  return nodeListToArray(hearingNodes());
-};
-
 var filterPrelims = function(hearings) {
   return hearings.filter(isPrelim);
 };
@@ -151,7 +177,7 @@ var filterArraignments = function(hearings) {
   return hearings.filter(isArraignment);
 };
 
-var hearings = extractHearings();
+var hearings = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* extractHearings */])(document.body);
 
 var prelims = filterPrelims(hearings);
 prelims.forEach(function(prelim) {

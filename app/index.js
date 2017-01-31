@@ -1,3 +1,5 @@
+import { extractHearings } from './calendar'
+
 var reqListener = function () {
   console.log(this.responseText);
 }
@@ -67,10 +69,6 @@ var nodeListToArray = function(nodeList) {
   return a;
 };
 
-var extractHearings = function() {
-  return nodeListToArray(hearingNodes());
-};
-
 var filterPrelims = function(hearings) {
   return hearings.filter(isPrelim);
 };
@@ -79,7 +77,7 @@ var filterArraignments = function(hearings) {
   return hearings.filter(isArraignment);
 };
 
-var hearings = extractHearings();
+var hearings = extractHearings(document.body);
 
 var prelims = filterPrelims(hearings);
 prelims.forEach(function(prelim) {
