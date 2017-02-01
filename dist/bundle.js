@@ -72,7 +72,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_list__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_node_list__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_urls__ = __webpack_require__(15);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return parseHearings; });
 /*jshint esversion: 6 */
@@ -99,7 +99,7 @@ const parseHearing = node => {
 };
 
 const parseHearings = node => {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__node_list__["a" /* nodeListToArray */])(hearingNodes(node), parseHearing);
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_node_list__["a" /* nodeListToArray */])(hearingNodes(node), parseHearing);
 };
 
 
@@ -197,11 +197,11 @@ const pageSegment = page => {
 };
 
 const lastSegment = page => {
-  switch (page) {
-    case 'actions':
-      return '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
-    default:
-      return '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0';
+  const segment = '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0';
+  if (page === 'actions') {
+    return segment + '&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
+  } else {
+    return segment;
   }
 };
 
@@ -237,7 +237,7 @@ const urls = ({casenumber, defnbr} = data) => {
 
 /***/ }),
 
-/***/ 2:
+/***/ 16:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

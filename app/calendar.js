@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-import { nodeListToArray as makeArray } from './node-list';
+import { nodeListToArray as makeArray } from './helpers/node-list';
 import { urls } from './pages/urls';
 
 const HEARING_NODE_SELECTOR = 'tr[id^="tr_row"]';
