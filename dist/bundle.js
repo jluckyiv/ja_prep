@@ -80,15 +80,18 @@
 
 
 
-const hearingNodes = node  => document.querySelectorAll('tr[id^="tr_row"]');
+const HEARING_NODE_SELECTOR = 'tr[id^="tr_row"]';
 
-const hearingNodeToObject = node => {
+const hearingNodes = node  => document.querySelectorAll(HEARING_NODE_SELECTOR);
+
+const parseHearing = node => {
   let hearing = {};
   hearing.heard = node.children[0].querySelector('input').checked;
   hearing.time = node.children[1].textContent.trim();
   hearing.casenumber = node.children[2].textContent.trim();
   hearing.name = node.children[3].textContent.trim();
-  hearing.defnbr = node.children[2].querySelector('a').href.match(/defnbr=(\d+)/)[1];
+  hearing.defnbr = node.children[2].querySelector('a').href
+    .match(/defnbr=(\d+)/)[1];
   hearing.description = node.children[4].textContent.trim();
   hearing.charges = node.children[5].textContent.trim();
   hearing.urls = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__pages_urls__["a" /* urls */])(hearing);
@@ -96,7 +99,7 @@ const hearingNodeToObject = node => {
 };
 
 const parseHearings = node => {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__node_list__["a" /* nodeListToArray */])(hearingNodes(node), hearingNodeToObject);
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__node_list__["a" /* nodeListToArray */])(hearingNodes(node), parseHearing);
 };
 
 
