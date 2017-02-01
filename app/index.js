@@ -21,7 +21,5 @@ var hasDisclosure = function(text) {
   return text.includes("DISCLOSURE FILED") || text.includes("COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
 };
 
-var hearings = parseHearings(document.body);
-
-window.hearings = hearings;
-console.log(`There are ${ hearings.length} hearings.`);
+window.hearings = parseHearings(document.body);
+console.log(`There are ${ window.hearings.length} hearings.`);
