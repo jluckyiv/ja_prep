@@ -192,7 +192,7 @@ const pageSegment = page => {
     case 'perm':
       return 'perm';
     default:
-      return 'info';
+      return 'defendantinfo';
   }
 };
 
