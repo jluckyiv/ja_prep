@@ -48,11 +48,11 @@ const pageSegment = page => {
 };
 
 const lastSegment = page => {
-  switch (page) {
-    case 'actions':
-      return '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
-    default:
-      return '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0';
+  const segment = '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0';
+  if (page === 'actions') {
+    return segment + '&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
+  } else {
+    return segment;
   }
 };
 
