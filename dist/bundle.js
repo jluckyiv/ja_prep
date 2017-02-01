@@ -66,142 +66,199 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return extractHearings; });
-var nodeListToArray = function(nodeList) {
-  var a = [];
-  for (var i = 0, l = nodeList.length; i < l; i += 1) {
-    a[a.length] = nodeList[i];
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_list__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_urls__ = __webpack_require__(15);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return parseHearings; });
+/*jshint esversion: 6 */
+
+
+
+
+const hearingNodes = node  => document.querySelectorAll('tr[id^="tr_row"]');
+
+const hearingNodeToObject = node => {
+  let hearing = {
+    heard: node.children[0].querySelector('input').checked,
+    time: node.children[1].textContent.trim(),
+    casenumber: node.children[2].textContent.trim(),
+    name: node.children[3].textContent.trim(),
+    defnbr: node.children[2].querySelector('a').href.match(/defnbr=(\d+)/)[1],
+    description: node.children[4].textContent.trim(),
+    charges: node.children[5].textContent.trim()
   };
-  return a;
+  hearing.urls = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__pages_urls__["a" /* urls */])(hearing);
+  return hearing;
 };
 
-var hearingNodes = function(node) {
-  return document.querySelectorAll('tr[id^="tr_row"]');
-};
-
-var extractHearings = function(node) {
-  return nodeListToArray(hearingNodes(node));
+const parseHearings = node => {
+  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__node_list__["a" /* nodeListToArray */])(hearingNodes(node), hearingNodeToObject);
 };
 
 
 
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__calendar__ = __webpack_require__(0);
+/*jshint esversion: 6 */
+
 
 
 var reqListener = function () {
   console.log(this.responseText);
-}
+};
 
 var getUrl = function(url, callback) {
   var oReq = new XMLHttpRequest();
   oReq.addEventListener("load", callback);
   oReq.open("GET", url);
   oReq.send();
-}
+};
 
 var needsDisclosure = function(text) {
   return !hasDisclosure(text);
 };
 var hasDisclosure = function(text) {
   // var text = document.body.textContent;
-  return text.includes("DISCLOSURE FILED") 
-    || text.includes("COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
+  return text.includes("DISCLOSURE FILED") || text.includes("COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
 };
 
-var extractHearingType = function(hearingRow) {
-  return hearingRow
-    .querySelectorAll('td')[4]
-    .textContent
-    .trim();
+var hearings = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* parseHearings */])(document.body);
+
+window.hearings = hearings;
+console.log(`There are ${ hearings.length} hearings.`);
+
+
+/***/ }),
+
+/***/ 15:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return urls; });
+/*jshint esversion: 6 */
+
+/* 
+ * http://riv-ja1/JA/criminal/actionlist.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y
+ * http://riv-ja1/JA/criminal/actionlist.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/criminalcasereport.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/defendantcharges.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/defendantinfo.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0<Paste>
+ * http://riv-ja1/JA/criminal/defendantstatus.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/dmv.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/fine.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/criminalimages.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/judgesnotes.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/minute.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/probation.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/perm.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ */
+
+const pageSegment = page => {
+  switch (page) {
+    case 'actions':
+      return 'actionlist';
+    case 'report':
+      return 'criminalcasereport';
+    case 'charges':
+      return 'defendantcharges';
+    case 'info':
+      return 'defendantinfo';
+    case 'status':
+      return 'defendantstatus';
+    case 'dmv':
+      return 'dmv';
+    case 'fine':
+      return 'fine';
+    case 'images':
+      return 'criminalimages';
+    case 'notes':
+      return 'judgesnotes';
+    case 'minutes':
+      return 'minute';
+    case 'probation':
+      return 'probation';
+    case 'perm':
+      return 'perm';
+    default:
+      return 'info';
+  }
 };
 
-var extractName = function(hearingRow) {
-  return hearingRow
-    .querySelectorAll('td')[3]
-    .textContent
-    .trim();
+const lastSegment = page => {
+  switch (page) {
+    case 'actions':
+      return '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
+    default:
+      return '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0';
+  }
 };
 
-var extractCaseReportLink = function(hearingRow) {
-  return hearingRow
-    .querySelectorAll('td')[2]
-    .querySelector('a')
-    .href
-    .replace('criminalcalendar', 'criminalcasereport');
+const url = (page, data) => {
+  return 'http://riv-ja1/JA/criminal/' +
+    pageSegment(page) + '.asp' +
+    '?casenumber=' + data.casenumber +
+    '&courtcode=C' +
+    '&defnbr=' + data.defnbr +
+    lastSegment(page);
 };
 
-var extractCaseNumber = function(hearingRow) {
-  return hearingRow
-    .querySelectorAll('td')[2]
-    .textContent
-    .trim();
-};
-
-var isPrelim = function(hearingRow) {
-  return extractHearingType(hearingRow) == "PRELIMINARY HEARING";
-};
-
-var isArraignment = function(hearingRow) {
-  return extractHearingType(hearingRow).includes("ARRAIGNMENT");
-};
-
-var hearingNodes = function() {
-  return document.querySelectorAll('tr[id^="tr_row"]');
-};
-
-var nodeListToArray = function(nodeList) {
-  var a = [];
-  for (var i = 0, l = nodeList.length; i < l; i += 1) {
-    a[a.length] = nodeList[i];
+const urls = (data) => {
+  return {
+    actions: url('actions', data),
+    report: url('report', data),
+    charges: url('charges', data),
+    info: url('info', data),
+    status: url('status', data),
+    dmv: url('dmv', data),
+    fine: url('fine', data),
+    images: url('images', data),
+    notes: url('notes', data),
+    minutes: url('minutes', data),
+    probation: url('probation', data),
+    perm: url('perm', data)
   };
+};
+
+
+
+
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return nodeListToArray; });
+/*jshint esversion: 6 */
+
+const nodeListToArray = (nodeList, callback) => {
+  let a = [];
+  for (let i = 0, l = nodeList.length; i < l; i += 1) {
+    if (callback) {
+      a[a.length] = callback(nodeList[i]);
+    } else {
+      a[a.length] = nodeList[i];
+    }
+  }
   return a;
 };
 
-var filterPrelims = function(hearings) {
-  return hearings.filter(isPrelim);
-};
 
-var filterArraignments = function(hearings) {
-  return hearings.filter(isArraignment);
-};
-
-var hearings = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* extractHearings */])(document.body);
-
-var prelims = filterPrelims(hearings);
-prelims.forEach(function(prelim) {
-  var caseNumber = extractCaseNumber(prelim);
-  var name = extractName(prelim);
-  var link = extractCaseReportLink(prelim);
-  getUrl(link, function() {
-    console.log(caseNumber + " " + name + " disclosure = " + hasDisclosure(this.responseText));
-  });
-});
-
-var arraignments = filterArraignments(hearings);
-arraignments.forEach(function(arraignment) {
-  var caseNumber = extractCaseNumber(arraignment);
-  var name = extractName(arraignment);
-  var link = extractCaseReportLink(arraignment);
-  getUrl(link, function() {
-    console.log(caseNumber + " " + name + " disclosure = " + hasDisclosure(this.responseText));
-  });
-});
-
-console.log("There are " + hearings.length + " hearings.");
-console.log("There are " + prelims.length + " prelims.");
 
 
 /***/ })
-/******/ ]);
+
+/******/ });

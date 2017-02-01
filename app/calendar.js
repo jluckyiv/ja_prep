@@ -1,17 +1,26 @@
-var nodeListToArray = function(nodeList) {
-  var a = [];
-  for (var i = 0, l = nodeList.length; i < l; i += 1) {
-    a[a.length] = nodeList[i];
+/*jshint esversion: 6 */
+
+import { nodeListToArray } from './node-list';
+import { urls } from './pages/urls';
+
+const hearingNodes = node  => document.querySelectorAll('tr[id^="tr_row"]');
+
+const hearingNodeToObject = node => {
+  let hearing = {
+    heard: node.children[0].querySelector('input').checked,
+    time: node.children[1].textContent.trim(),
+    casenumber: node.children[2].textContent.trim(),
+    name: node.children[3].textContent.trim(),
+    defnbr: node.children[2].querySelector('a').href.match(/defnbr=(\d+)/)[1],
+    description: node.children[4].textContent.trim(),
+    charges: node.children[5].textContent.trim()
   };
-  return a;
+  hearing.urls = urls(hearing);
+  return hearing;
 };
 
-var hearingNodes = function(node) {
-  return document.querySelectorAll('tr[id^="tr_row"]');
+const parseHearings = node => {
+  return nodeListToArray(hearingNodes(node), hearingNodeToObject);
 };
 
-var extractHearings = function(node) {
-  return nodeListToArray(hearingNodes(node));
-};
-
-export { extractHearings };
+export { parseHearings };
