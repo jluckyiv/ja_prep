@@ -202,29 +202,29 @@ const lastSegment = page => {
   }
 };
 
-const url = (page, data) => {
+const url = (page, casenumber, defnbr) => {
   return 'http://riv-ja1/JA/criminal/' +
     pageSegment(page) + '.asp' +
-    '?casenumber=' + data.casenumber +
+    '?casenumber=' + casenumber +
     '&courtcode=C' +
-    '&defnbr=' + data.defnbr +
+    '&defnbr=' + defnbr +
     lastSegment(page);
 };
 
-const urls = (data) => {
+const urls = ({casenumber, defnbr} = data) => {
   return {
-    actions: url('actions', data),
-    report: url('report', data),
-    charges: url('charges', data),
-    info: url('info', data),
-    status: url('status', data),
-    dmv: url('dmv', data),
-    fine: url('fine', data),
-    images: url('images', data),
-    notes: url('notes', data),
-    minutes: url('minutes', data),
-    probation: url('probation', data),
-    perm: url('perm', data)
+    actions: url('actions', casenumber, defnbr),
+    report: url('report', casenumber, defnbr),
+    charges: url('charges', casenumber, defnbr),
+    info: url('info', casenumber, defnbr),
+    status: url('status', casenumber, defnbr),
+    dmv: url('dmv', casenumber, defnbr),
+    fine: url('fine', casenumber, defnbr),
+    images: url('images', casenumber, defnbr),
+    notes: url('notes', casenumber, defnbr),
+    minutes: url('minutes', casenumber, defnbr),
+    probation: url('probation', casenumber, defnbr),
+    perm: url('perm', casenumber, defnbr)
   };
 };
 
