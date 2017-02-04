@@ -63,107 +63,16 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_node_list__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_urls__ = __webpack_require__(15);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return parseHearings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Urls; });
 /*jshint esversion: 6 */
-
-
-
-
-const HEARING_NODE_SELECTOR = 'tr[id^="tr_row"]';
-
-const hearingNodes = node  => document.querySelectorAll(HEARING_NODE_SELECTOR);
-
-const parseHearing = node => {
-  let hearing = {};
-  hearing.heard = node.children[0].querySelector('input').checked;
-  hearing.time = node.children[1].textContent.trim();
-  hearing.casenumber = node.children[2].textContent.trim();
-  hearing.name = node.children[3].textContent.trim();
-  hearing.defnbr = node.children[2].querySelector('a').href
-    .match(/defnbr=(\d+)/)[1];
-  hearing.description = node.children[4].textContent.trim();
-  hearing.charges = node.children[5].textContent.trim();
-  hearing.urls = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__pages_urls__["a" /* urls */])(hearing);
-  return hearing;
-};
-
-const parseHearings = node => {
-  return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_node_list__["a" /* nodeListToArray */])(hearingNodes(node), parseHearing);
-};
-
-
-
-
-/***/ }),
-
-/***/ 1:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__calendar__ = __webpack_require__(0);
-/*jshint esversion: 6 */
-
-
-
-var reqListener = function () {
-  console.log(this.responseText);
-};
-
-var getUrl = function(url, callback) {
-  var oReq = new XMLHttpRequest();
-  oReq.addEventListener("load", callback);
-  oReq.open("GET", url);
-  oReq.send();
-};
-
-var needsDisclosure = function(text) {
-  return !hasDisclosure(text);
-};
-var hasDisclosure = function(text) {
-  // var text = document.body.textContent;
-  return text.includes("DISCLOSURE FILED") || text.includes("COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
-};
-
-window.hearings = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* parseHearings */])(document.body);
-console.log(`There are ${ window.hearings.length} hearings.`);
-
-
-/***/ }),
-
-/***/ 15:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return urls; });
-/*jshint esversion: 6 */
-
-/* 
- * http://riv-ja1/JA/criminal/actionlist.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y
- * http://riv-ja1/JA/criminal/actionlist.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/criminalcasereport.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/defendantcharges.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/defendantinfo.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0<Paste>
- * http://riv-ja1/JA/criminal/defendantstatus.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/dmv.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/fine.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/criminalimages.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/judgesnotes.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/minute.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/probation.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- * http://riv-ja1/JA/criminal/perm.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
- */
 
 const pageSegment = page => {
   switch (page) {
@@ -197,7 +106,7 @@ const pageSegment = page => {
 };
 
 const lastSegment = page => {
-  const segment = '&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0';
+  const segment = '&defseq=1&otnmseq=0&fmt=auto';
   if (page === 'actions') {
     return segment + '&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
   } else {
@@ -231,20 +140,167 @@ const urls = ({casenumber, defnbr} = data) => {
   };
 };
 
+let Urls = {};
+Urls.urls = urls;
+
+
+
+/* 
+ * http://riv-ja1/JA/criminal/actionlist.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y
+ * http://riv-ja1/JA/criminal/actionlist.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/criminalcasereport.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/defendantcharges.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/defendantinfo.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0<Paste>
+ * http://riv-ja1/JA/criminal/defendantstatus.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/dmv.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/fine.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+
+ * http://riv-ja1/JA/criminal/criminalimages.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/criminalimages.asp?courtcode=C&defnbr=1198453&casenumber=RIF1604943&defseq=1&otnmseq=0&fmt=auto
+
+ * http://riv-ja1/JA/criminal/judgesnotes.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/minute.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/probation.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ * http://riv-ja1/JA/criminal/perm.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
+ */
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_helpers__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__urls__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ajax__ = __webpack_require__(3);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Calendar; });
+/*jshint esversion: 6 */
+
+
+
+
+
+const HEARING_NODE_SELECTOR = 'tr[id^="tr_row"]';
+
+const findOrCreateInfoRow = hearing => {
+  let row, buttonCell, button, infoCell;
+  const hearingNode = document.getElementById(hearing.nodeId);
+  const nodeId = hearing.infoNodeId;
+  row = document.getElementById(nodeId);
+  if (!row) {
+    row = document.createElement('tr');
+    row.id = nodeId;
+    buttonCell = document.createElement('td');
+    button = document.createElement('button');
+    button.textContent = 'Info';
+    button.addEventListener('click', function(){loadInfo(hearing);}, false);
+    buttonCell.appendChild(button);
+    row.appendChild(buttonCell);
+    infoCell = document.createElement('td');
+    infoCell.colSpan = '6';
+    row.appendChild(infoCell);
+    __WEBPACK_IMPORTED_MODULE_0__node_helpers__["a" /* NodeHelpers */].insertAfter(row, hearingNode);
+  }
+  row.style.display = hearingNode.style.display;
+  return row;
+};
+
+const setInfoText = (text, hearing) => {
+  const node = findOrCreateInfoRow(hearing);
+  node.children[1].textContent = text;
+};
+
+const addInfoRows = (hearings, callback) => {
+  hearings.forEach( hearing => {
+    let row = findOrCreateInfoRow(hearing);
+    if (callback) {
+      callback(row, hearing);
+    }
+  });
+};
+
+const loadInfo = hearing => {
+  setInfoText('Loading info for ' + hearing.casenumber, hearing);
+  __WEBPACK_IMPORTED_MODULE_2__ajax__["a" /* Ajax */].get(hearing.urls.info, function() {
+    setInfoText('Info loaded for ' + hearing.casenumber, hearing);
+  });
+};
+
+const getInfo = hearings => {
+  addInfoRows(hearings);
+};
+
+const hearingNodes = node  => document.querySelectorAll(HEARING_NODE_SELECTOR);
+
+const parseHearing = node => {
+  let hearing = {};
+  hearing.nodeId = node.id;
+  hearing.infoNodeId = 'info_' + node.id;
+  hearing.heard = node.children[0].querySelector('input').checked;
+  hearing.time = node.children[1].textContent.trim();
+  hearing.casenumber = node.children[2].textContent.trim();
+  hearing.name = node.children[3].textContent.trim();
+  hearing.defnbr = node.children[2].querySelector('a').href
+    .match(/defnbr=(\d+)/)[1];
+  hearing.description = node.children[4].textContent.trim();
+  hearing.charges = node.children[5].textContent.trim();
+  hearing.urls = __WEBPACK_IMPORTED_MODULE_1__urls__["a" /* Urls */].urls(hearing);
+  return hearing;
+};
+
+const parseHearings = node => {
+  return __WEBPACK_IMPORTED_MODULE_0__node_helpers__["a" /* NodeHelpers */].toArray(hearingNodes(node), parseHearing);
+};
+
+let Calendar = {};
+Calendar.getInfo = getInfo;
+Calendar.parseHearings = parseHearings;
 
 
 
 
 /***/ }),
-
-/***/ 16:
+/* 2 */,
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return nodeListToArray; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Ajax; });
 /*jshint esversion: 6 */
 
-const nodeListToArray = (nodeList, callback) => {
+const logResponse = function () {
+  console.log(this.responseText);
+};
+
+const get = function(url, callback) {
+  let oReq = new XMLHttpRequest();
+  oReq.addEventListener('load', callback);
+  oReq.open('GET', url);
+  oReq.send();
+};
+
+let Ajax = {};
+Ajax.get = get;
+
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NodeHelpers; });
+/*jshint esversion: 6 */
+
+const insertAfter = (newNode, referenceNode) => {
+  const parent = referenceNode.parentNode;
+  const next = referenceNode.nextElementSibling;
+  parent.insertBefore(newNode, next);
+};
+
+const toArray = (nodeList, callback) => {
   let a = [];
   for (let i = 0, l = nodeList.length; i < l; i += 1) {
     if (callback) {
@@ -256,9 +312,29 @@ const nodeListToArray = (nodeList, callback) => {
   return a;
 };
 
+let NodeHelpers = {};
+NodeHelpers.insertAfter = insertAfter;
+NodeHelpers.toArray = toArray;
 
+
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__calendar__ = __webpack_require__(1);
+/*jshint esversion: 6 */
+
+
+
+const hearings = __WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* Calendar */].parseHearings(document.body);
+window.hearings = hearings;
+__WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* Calendar */].addInfoRows(hearings);
+console.log(`There are ${ hearings.length } hearings.`);
 
 
 /***/ })
-
-/******/ });
+/******/ ]);
