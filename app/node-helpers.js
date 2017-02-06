@@ -6,6 +6,10 @@ const insertAfter = (newNode, referenceNode) => {
   parent.insertBefore(newNode, next);
 };
 
+const removeNode = node => {
+  if (node) { node.parentNode.removeChild(node); }
+};
+
 const toArray = (nodeList, callback) => {
   let a = [];
   for (let i = 0, l = nodeList.length; i < l; i += 1) {
@@ -20,6 +24,7 @@ const toArray = (nodeList, callback) => {
 
 let NodeHelpers = {};
 NodeHelpers.insertAfter = insertAfter;
+NodeHelpers.removeNode = removeNode;
 NodeHelpers.toArray = toArray;
 
 export { NodeHelpers };
