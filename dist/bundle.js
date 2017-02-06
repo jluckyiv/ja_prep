@@ -283,9 +283,15 @@ const updateInfoText = function(hearing) {
     const deadlines = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].deadlines(info);
     if(deadlines) {
       let deadlinesEl = document.createElement('ul');
+      deadlinesEl.style.listStyle = 'none';
       deadlines.forEach(function(deadline) {
         let li = document.createElement('li');
-        li.textContent = deadline.description;
+        let number = document.createElement('span');
+        li.appendChild(number);
+        let description = document.createElement('span');
+        li.appendChild(description);
+        li.textContent = deadline.number + '. ' + deadline.description;
+        li.style.textIndent = '-2em';
         deadlinesEl.appendChild(li);
       });
       infoDiv.appendChild(deadlinesEl);
