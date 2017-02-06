@@ -253,7 +253,7 @@ const updateInfoText = function(hearing) {
       let terminationsEl = document.createElement('ul');
       terminations.forEach(function(termination) {
         let li = document.createElement('li');
-        li.textContent = termination.date;
+        li.textContent = termination.date + ' ';
         let a = document.createElement('a');
         a.href = termination.imageUrl;
         a.textContent = termination.description;
