@@ -465,7 +465,7 @@ const isTermination = function(action) {
   return result;
 };
 
-const isDeadline = probationTerm => {
+const isDeadline = function(probationTerm) {
   const result = probationTerm.description.search(/(BY|BEFORE) \d\d\/\d\d\/\d\d\d\d/) > -1;
   return result;
 };
