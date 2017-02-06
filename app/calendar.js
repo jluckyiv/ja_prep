@@ -75,16 +75,20 @@ const createInfoRows = (hearings, callback) => {
 };
 
 const parseHearing = node => {
+  let timeIndex = 0;
+  if (document.querySelector('.table-results tr th').textContent.trim() === "Heard") {
+    timeIndex = 1;
+  }
   let hearing = {};
   hearing.nodeId = node.id;
   hearing.infoNodeId = 'info_' + node.id;
-  hearing.time = node.children[1].textContent.trim();
-  hearing.casenumber = node.children[2].textContent.trim();
-  hearing.name = node.children[3].textContent.trim();
-  hearing.defnbr = node.children[2].querySelector('a').href
+  hearing.time = node.children[timeIndex].textContent.trim();
+  hearing.casenumber = node.children[timeIndex + 1].textContent.trim();
+  hearing.name = node.children[timeIndex + 2].textContent.trim();
+  hearing.defnbr = node.children[timeIndex + 1].querySelector('a').href
     .match(/defnbr=(\d+)/)[1];
-  hearing.description = node.children[4].textContent.trim();
-  hearing.charges = node.children[5].textContent.trim();
+  hearing.description = node.children[timeIndex + 3].textContent.trim();
+  hearing.charges = node.children[timeIndex + 4].textContent.trim();
   hearing.urls = Urls.urls(hearing);
   return hearing;
 };
