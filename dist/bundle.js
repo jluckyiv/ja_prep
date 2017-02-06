@@ -386,6 +386,10 @@ const ACTION_NODE_SELECTOR = 'tr > input[id^="hidKey"]';
 const PROBATION_TERMS_SELECTOR = '#divProbationBody > #table-box3 > tbody > tr';
 const PROBATION_SUMMARY_SELECTOR = '#divProbationBody > #table-title-left td';
 
+const includes= function(text, searchTerm) {
+  return text.indexOf(searchTerm) > -1;
+};
+
 const parseProbationInfo = function(node) {
   let result = {};
   const nodes = node.querySelectorAll(PROBATION_SUMMARY_SELECTOR);
@@ -444,8 +448,8 @@ const parseActionCode = function(value) {
 
 const hasDisclosure = function(html) {
   const text = html.body.textContent;
-  const result = text.includes("DISCLOSURE FILED") || 
-    text.includes("COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
+  const result = includes(text, "DISCLOSURE FILED") || 
+    includes(text, "COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
   return result;
 };
 const needsDisclosure = function(caseReport) {
@@ -453,14 +457,14 @@ const needsDisclosure = function(caseReport) {
 };
 
 const isProof = function(action) {
-  const result = (action.description.includes('PROOF OF') ||
-    action.description.includes('PROGRESS REPORT')) && 
+  const result = (includes(action.description, 'PROOF OF') ||
+    includes(action.description, 'PROGRESS REPORT')) && 
     action.imageUrl && action.imageUrl.length;
   return result;
 };
 
 const isTermination = function(action) {
-  const result = action.description.includes('PROGRAM TERMINATION') &&
+  const result = includes(action.description, 'PROGRAM TERMINATION') &&
     action.imageUrl && action.imageUrl.length;
   return result;
 };
