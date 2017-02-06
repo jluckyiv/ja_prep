@@ -223,6 +223,22 @@ const updateInfoText = (hearing) => {
     disclosureEl.textContent = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].needsDisclosure(info) ? 'Needs disclosure.' : 'Disclosure given';
     infoDiv.appendChild(disclosureEl);
 
+    const terminations = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].terminations(info);
+    if(terminations) {
+      let terminationsEl = document.createElement('ul');
+      terminations.forEach(termination => {
+        let li = document.createElement('li');
+        li.textContent = `${termination.date} `;
+        let a = document.createElement('a');
+        a.href = termination.imageUrl;
+        a.textContent = `${termination.description}`;
+        a.target = `_blank`;
+        li.appendChild(a);
+        terminationsEl.appendChild(li);
+      });
+      infoDiv.appendChild(terminationsEl);
+    }
+
     const proofs = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].proofs(info);
     if(proofs) {
       let proofsEl = document.createElement('ul');
