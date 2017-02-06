@@ -24,7 +24,6 @@ describe ('Calendar', () => {
       const subject = calendar[0];
       expect(subject.nodeId).to.equal('tr_row0');
       expect(subject.infoNodeId).to.equal('info_tr_row0');
-      expect(subject.heard).to.be.false;
       expect(subject.time).to.equal('8:30 AM');
       expect(subject.casenumber).to.equal('RIM1411527');
       expect(subject.name).to.equal('AGUILAR GONZALEZ, ANTHONY JUNIOR');

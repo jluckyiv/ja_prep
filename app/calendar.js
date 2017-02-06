@@ -78,7 +78,6 @@ const parseHearing = node => {
   let hearing = {};
   hearing.nodeId = node.id;
   hearing.infoNodeId = 'info_' + node.id;
-  hearing.heard = node.children[0].querySelector('input').checked;
   hearing.time = node.children[1].textContent.trim();
   hearing.casenumber = node.children[2].textContent.trim();
   hearing.name = node.children[3].textContent.trim();
