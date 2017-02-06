@@ -105,8 +105,7 @@ describe('CaseReport', () => {
 
       it("should find program terminations", () => {
         const subject = CaseReport.terminations(caseReport);
-        expect(subject[0].description).to.include('NOT FORWARDED');
-        expect(subject[1].description).to.include('WORK RELEASE');
+        expect(subject[0].description).to.include('WORK RELEASE');
       });
 
       it("should find proof of enrollment/completion", () => {

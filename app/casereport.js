@@ -72,12 +72,14 @@ const hasDisclosure = html => {
 const needsDisclosure = caseReport => caseReport.needsDisclosure;
 
 const isProof = action => {
-  const result = action.description.includes('PROOF OF');
+  const result = action.description.includes('PROOF OF') && 
+    action.imageUrl && action.imageUrl.length;
   return result;
 };
 
 const isTermination = action => {
-  const result = action.description.includes('PROGRAM TERMINATION');
+  const result = action.description.includes('PROGRAM TERMINATION') &&
+    action.imageUrl && action.imageUrl.length;
   return result;
 };
 
