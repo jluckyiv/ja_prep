@@ -6,10 +6,10 @@ const logResponse = function () {
 
 const get = function(url, callback) {
   let xhr = new XMLHttpRequest();
-  xhr.responseType = 'document';
   xhr.addEventListener('load', callback);
   xhr.open('GET', url);
   xhr.send();
+  xhr.responseType = 'document';
 };
 
 let Ajax = {};
