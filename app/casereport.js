@@ -72,7 +72,8 @@ const hasDisclosure = html => {
 const needsDisclosure = caseReport => caseReport.needsDisclosure;
 
 const isProof = action => {
-  const result = action.description.includes('PROOF OF') && 
+  const result = (action.description.includes('PROOF OF') ||
+    action.description.includes('PROGRESS REPORT')) && 
     action.imageUrl && action.imageUrl.length;
   return result;
 };
