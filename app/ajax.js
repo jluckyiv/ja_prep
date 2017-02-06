@@ -5,10 +5,11 @@ const logResponse = function () {
 };
 
 const get = function(url, callback) {
-  let oReq = new XMLHttpRequest();
-  oReq.addEventListener('load', callback);
-  oReq.open('GET', url);
-  oReq.send();
+  let xhr = new XMLHttpRequest();
+  xhr.responseType = 'document';
+  xhr.addEventListener('load', callback);
+  xhr.open('GET', url);
+  xhr.send();
 };
 
 let Ajax = {};
