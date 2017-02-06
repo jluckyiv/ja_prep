@@ -194,7 +194,6 @@ const parseHearing = node => {
   let hearing = {};
   hearing.nodeId = node.id;
   hearing.infoNodeId = 'info_' + node.id;
-  hearing.heard = node.children[0].querySelector('input').checked;
   hearing.time = node.children[1].textContent.trim();
   hearing.casenumber = node.children[2].textContent.trim();
   hearing.name = node.children[3].textContent.trim();
@@ -427,7 +426,8 @@ const hasDisclosure = html => {
 const needsDisclosure = caseReport => caseReport.needsDisclosure;
 
 const isProof = action => {
-  const result = action.description.includes('PROOF OF') && 
+  const result = (action.description.includes('PROOF OF') ||
+    action.description.includes('PROGRESS REPORT')) && 
     action.imageUrl && action.imageUrl.length;
   return result;
 };
