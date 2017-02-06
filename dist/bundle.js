@@ -74,17 +74,17 @@
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NodeHelpers; });
 /*jshint esversion: 6 */
 
-const insertAfter = (newNode, referenceNode) => {
+const insertAfter = function(newNode, referenceNode) {
   const parent = referenceNode.parentNode;
   const next = referenceNode.nextElementSibling;
   parent.insertBefore(newNode, next);
 };
 
-const removeNode = node => {
+const removeNode = function(node) {
   if (node) { node.parentNode.removeChild(node); }
 };
 
-const toArray = (nodeList, callback) => {
+const toArray = function(nodeList, callback) {
   let a = [];
   for (let i = 0, l = nodeList.length; i < l; i += 1) {
     if (callback) {
@@ -122,50 +122,72 @@ NodeHelpers.toArray = toArray;
 
 
 const HEARING_NODE_SELECTOR = 'tr[id^="tr_row"]';
-const hearingNodes = node  => document.querySelectorAll(HEARING_NODE_SELECTOR);
-const hearingRow = hearing => document.getElementById(hearing.nodeId);
-const infoRow = hearing => document.getElementById(hearing.infoNodeId);
+const hearingNodes = function(node) {
+  return document.querySelectorAll(HEARING_NODE_SELECTOR);
+};
+const hearingRow = function(hearing) {
+  return document.getElementById(hearing.nodeId);
+};
+const infoRow = function(hearing) {
+  return document.getElementById(hearing.infoNodeId);
+};
 
-const infoButtonCell = hearing => infoRow(hearing).children[0];
-const infoButton = hearing => infoRow(hearing).children[0].children[0];
-const infoCell = hearing => infoRow(hearing).children[1];
+const infoButtonCell = function(hearing) {
+  return infoRow(hearing).children[0];
+};
+const infoButton = function(hearing) {
+  return infoRow(hearing).children[0].children[0];
+};
+const infoCell = function(hearing) {
+  return infoRow(hearing).children[1];
+};
 
-const setButtonText = (text, hearing) => infoButton(hearing).textContent = text; 
-const disableButton = (hearing) => infoButton(hearing).disabled = true;
-const enableButton = (hearing) => infoButton(hearing).disabled = false;
-const setInfoText = (text, hearing) => infoCell(hearing).textContent = text;
+const setButtonText = function(text, hearing) {
+  infoButton(hearing).textContent = text;
+};
+const disableButton = function(hearing) {
+  infoButton(hearing).disabled = true;
+};
+const enableButton = function(hearing) {
+  infoButton(hearing).disabled = false;
+};
+const setInfoText = function(text, hearing) {
+  infoCell(hearing).textContent = text;
+};
 
-const deleteInfoRow = hearing => __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].removeNode(infoRow(hearing));
-const createInfoRow = hearing => {
+const deleteInfoRow = function(hearing) {
+  return __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].removeNode(infoRow(hearing));
+};
+const createInfoRow = function(hearing) {
   let row = document.createElement('tr');
   row.id = hearing.infoNodeId;
   row.setAttribute('class', 'hearing-info');
   return row;
 };
 
-const createInfoButtonCell = hearing => {
+const createInfoButtonCell = function(hearing) {
   let buttonCell = document.createElement('td');
   buttonCell.setAttribute('class', 'info-button-cell');
   buttonCell.setAttribute('valign', 'top');
   return buttonCell;
 };
 
-const createInfoButton = hearing => {
+const createInfoButton = function(hearing) {
   let button = document.createElement('button');
   button.textContent = 'Info';
   button.setAttribute('class', 'info-button');
-  button.addEventListener('click', () => getInfo(hearing), false);
+  button.addEventListener('click', function() { getInfo(hearing); }, false);
   return button;
 };
 
-const createInfoCell = hearing => {
+const createInfoCell = function(hearing) {
   let infoCell = document.createElement('td');
   infoCell.setAttribute('class', 'info-cell');
   infoCell.colSpan = '6';
   return infoCell;
 };
 
-const appendInfoRow = hearing => {
+const appendInfoRow = function(hearing) {
   deleteInfoRow(hearing);
 
   const hearingNode = hearingRow(hearing);
@@ -181,8 +203,8 @@ const appendInfoRow = hearing => {
   __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].insertAfter(row, hearingNode);
 };
 
-const createInfoRows = (hearings, callback) => {
-  hearings.forEach(hearing => {
+const createInfoRows = function(hearings, callback) {
+  hearings.forEach(function(hearing)  {
     appendInfoRow(hearing);
     if (callback) {
       callback(hearing);
@@ -190,7 +212,7 @@ const createInfoRows = (hearings, callback) => {
   });
 };
 
-const parseHearing = node => {
+const parseHearing = function(node) {
   let timeIndex = 0;
   if (document.querySelector('.table-results tr th').textContent.trim() === "Heard") {
     timeIndex = 1;
@@ -209,11 +231,11 @@ const parseHearing = node => {
   return hearing;
 };
 
-const parseHearings = node => {
+const parseHearings = function(node) {
   return __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].toArray(hearingNodes(node), parseHearing);
 };
 
-const updateInfoText = (hearing) => {
+const updateInfoText = function(hearing) {
   const info = hearing.info;
   setInfoText('', hearing);
   if (info) {
@@ -229,7 +251,7 @@ const updateInfoText = (hearing) => {
     const terminations = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].terminations(info);
     if(terminations) {
       let terminationsEl = document.createElement('ul');
-      terminations.forEach(termination => {
+      terminations.forEach(function(termination) {
         let li = document.createElement('li');
         li.textContent = `${termination.date} `;
         let a = document.createElement('a');
@@ -245,7 +267,7 @@ const updateInfoText = (hearing) => {
     const proofs = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].proofs(info);
     if(proofs) {
       let proofsEl = document.createElement('ul');
-      proofs.forEach(proof => {
+      proofs.forEach(function(proof) {
         let li = document.createElement('li');
         li.textContent = `${proof.date} `;
         let a = document.createElement('a');
@@ -261,7 +283,7 @@ const updateInfoText = (hearing) => {
     const deadlines = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].deadlines(info);
     if(deadlines) {
       let deadlinesEl = document.createElement('ul');
-      deadlines.forEach(deadline => {
+      deadlines.forEach(function(deadline) {
         let li = document.createElement('li');
         li.textContent = deadline.description;
         deadlinesEl.appendChild(li);
@@ -272,17 +294,17 @@ const updateInfoText = (hearing) => {
   }
 };
 
-const setCachedValue = hearing => {
+const setCachedValue = function(hearing) {
   const key = hearing.casenumber + hearing.defnbr;
   localStorage.setItem(key, JSON.stringify(hearing.info));
 };
 
-const getCachedValue = hearing => {
+const getCachedValue = function(hearing) {
   const key = hearing.casenumber + hearing.defnbr;
   hearing.info = JSON.parse(localStorage.getItem(key));
 };
 
-const toggleInfo = hearing => {
+const toggleInfo = function(hearing) {
   let infoDiv = infoCell(hearing).querySelector('div');
   if (infoDiv.style.display === '') {
     infoButton(hearing).textContent = 'Show';
@@ -293,10 +315,10 @@ const toggleInfo = hearing => {
   }
 };
 
-const createToggleButton = hearing => {
+const createToggleButton = function(hearing) {
   let button = document.createElement('button');
   button.textContent = 'Hide';
-  button.addEventListener('click', () => toggleInfo(hearing), false);
+  button.addEventListener('click', function() { toggleInfo(hearing); }, false);
   infoButtonCell(hearing).appendChild(button);
 };
 
@@ -365,7 +387,7 @@ const PROBATION_DIV_ID = `divProbationBody`;
 const PROBATION_TERMS_SELECTOR = `#${PROBATION_DIV_ID} > #table-box3 > tbody > tr`;
 const PROBATION_SUMMARY_SELECTOR = `#${PROBATION_DIV_ID} > #table-title-left td`;
 
-const parseProbationInfo = node => {
+const parseProbationInfo = function(node) {
   let result = {};
   const nodes = node.querySelectorAll(PROBATION_SUMMARY_SELECTOR);
   if (nodes && nodes.length) {
@@ -376,7 +398,7 @@ const parseProbationInfo = node => {
   return result;
 };
 
-const parseProbationTerms = node => {
+const parseProbationTerms = function(node) {
   let result = [];
   const nodes = node.querySelectorAll(PROBATION_TERMS_SELECTOR);
   if (nodes && nodes.length) {
@@ -389,7 +411,7 @@ const parseProbationTerms = node => {
   return result;
 };
 
-const parseAction = node => {
+const parseAction = function(node) {
   let result = {};
   const parent = node.parentNode;
   const cells = parent.querySelectorAll('td');
@@ -406,7 +428,7 @@ const parseAction = node => {
   return result;
 };
 
-const parseActions = html => {
+const parseActions = function(html) {
   let result = [];
   const nodes = html.querySelectorAll(ACTION_NODE_SELECTOR);
   if (nodes && nodes.length) {
@@ -415,28 +437,30 @@ const parseActions = html => {
   return result;
 };
 
-const parseActionCode = value => {
+const parseActionCode = function(value) {
   const segments = value.split(',');
   const result = segments[9];
   return result;
 };
 
-const hasDisclosure = html => {
+const hasDisclosure = function(html) {
   const text = html.body.textContent;
   const result = text.includes("DISCLOSURE FILED") || 
     text.includes("COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
   return result;
 };
-const needsDisclosure = caseReport => caseReport.needsDisclosure;
+const needsDisclosure = function(caseReport) {
+  return caseReport.needsDisclosure;
+};
 
-const isProof = action => {
+const isProof = function(action) {
   const result = (action.description.includes('PROOF OF') ||
     action.description.includes('PROGRESS REPORT')) && 
     action.imageUrl && action.imageUrl.length;
   return result;
 };
 
-const isTermination = action => {
+const isTermination = function(action) {
   const result = action.description.includes('PROGRAM TERMINATION') &&
     action.imageUrl && action.imageUrl.length;
   return result;
@@ -447,7 +471,7 @@ const isDeadline = probationTerm => {
   return result;
 };
 
-const create = (html, action) => {
+const create = function(html, action) {
   let result = {};
   result.needsDisclosure = !hasDisclosure(html);
   result.actions = parseActions(html);
@@ -456,12 +480,12 @@ const create = (html, action) => {
   return result;
 };
 
-const actions = caseReport => caseReport.actions;
-const deadlines = caseReport => caseReport.probationTerms.filter(isDeadline);
-const probationInfo = caseReport => caseReport.probationInfo;
-const probationTerms = caseReport => caseReport.probationTerms;
-const proofs = caseReport => caseReport.actions.filter(isProof); 
-const terminations = caseReport => caseReport.actions.filter(isTermination);
+const actions = function(caseReport) { return  caseReport.actions; };
+const deadlines = function(caseReport) { return  caseReport.probationTerms.filter(isDeadline); };
+const probationInfo = function(caseReport) { return  caseReport.probationInfo; };
+const probationTerms = function(caseReport) { return  caseReport.probationTerms; };
+const proofs = function(caseReport) { return  caseReport.actions.filter(isProof);  };
+const terminations = function(caseReport) { return  caseReport.actions.filter(isTermination); };
 
 let CaseReport = {};
 CaseReport.create = create;
@@ -485,7 +509,7 @@ CaseReport.deadlines = deadlines;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Urls; });
 /*jshint esversion: 6 */
 
-const pageSegment = page => {
+const pageSegment = function(page) {
   switch (page) {
     case 'actions':
       return 'actionlist';
@@ -516,7 +540,7 @@ const pageSegment = page => {
   }
 };
 
-const lastSegment = page => {
+const lastSegment = function(page) {
   const segment = '&defseq=1&otnmseq=0&fmt=auto';
   if (page === 'actions') {
     return segment + '&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
@@ -525,7 +549,7 @@ const lastSegment = page => {
   }
 };
 
-const url = (page, casenumber, defnbr) => {
+const url = function(page, casenumber, defnbr) {
   return 'http://riv-ja1/JA/criminal/' +
     pageSegment(page) + '.asp' +
     '?casenumber=' + casenumber +
@@ -534,7 +558,9 @@ const url = (page, casenumber, defnbr) => {
     lastSegment(page);
 };
 
-const urls = ({casenumber, defnbr} = data) => {
+const urls = function(data) {
+  const casenumber = data.casenumber;
+  const defnbr = data.defnbr;
   return {
     actions: url('actions', casenumber, defnbr),
     report: url('report', casenumber, defnbr),

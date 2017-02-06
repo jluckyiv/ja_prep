@@ -6,50 +6,72 @@ import { NodeHelpers} from './node-helpers';
 import { Urls } from './urls';
 
 const HEARING_NODE_SELECTOR = 'tr[id^="tr_row"]';
-const hearingNodes = node  => document.querySelectorAll(HEARING_NODE_SELECTOR);
-const hearingRow = hearing => document.getElementById(hearing.nodeId);
-const infoRow = hearing => document.getElementById(hearing.infoNodeId);
+const hearingNodes = function(node) {
+  return document.querySelectorAll(HEARING_NODE_SELECTOR);
+};
+const hearingRow = function(hearing) {
+  return document.getElementById(hearing.nodeId);
+};
+const infoRow = function(hearing) {
+  return document.getElementById(hearing.infoNodeId);
+};
 
-const infoButtonCell = hearing => infoRow(hearing).children[0];
-const infoButton = hearing => infoRow(hearing).children[0].children[0];
-const infoCell = hearing => infoRow(hearing).children[1];
+const infoButtonCell = function(hearing) {
+  return infoRow(hearing).children[0];
+};
+const infoButton = function(hearing) {
+  return infoRow(hearing).children[0].children[0];
+};
+const infoCell = function(hearing) {
+  return infoRow(hearing).children[1];
+};
 
-const setButtonText = (text, hearing) => infoButton(hearing).textContent = text; 
-const disableButton = (hearing) => infoButton(hearing).disabled = true;
-const enableButton = (hearing) => infoButton(hearing).disabled = false;
-const setInfoText = (text, hearing) => infoCell(hearing).textContent = text;
+const setButtonText = function(text, hearing) {
+  infoButton(hearing).textContent = text;
+};
+const disableButton = function(hearing) {
+  infoButton(hearing).disabled = true;
+};
+const enableButton = function(hearing) {
+  infoButton(hearing).disabled = false;
+};
+const setInfoText = function(text, hearing) {
+  infoCell(hearing).textContent = text;
+};
 
-const deleteInfoRow = hearing => NodeHelpers.removeNode(infoRow(hearing));
-const createInfoRow = hearing => {
+const deleteInfoRow = function(hearing) {
+  return NodeHelpers.removeNode(infoRow(hearing));
+};
+const createInfoRow = function(hearing) {
   let row = document.createElement('tr');
   row.id = hearing.infoNodeId;
   row.setAttribute('class', 'hearing-info');
   return row;
 };
 
-const createInfoButtonCell = hearing => {
+const createInfoButtonCell = function(hearing) {
   let buttonCell = document.createElement('td');
   buttonCell.setAttribute('class', 'info-button-cell');
   buttonCell.setAttribute('valign', 'top');
   return buttonCell;
 };
 
-const createInfoButton = hearing => {
+const createInfoButton = function(hearing) {
   let button = document.createElement('button');
   button.textContent = 'Info';
   button.setAttribute('class', 'info-button');
-  button.addEventListener('click', () => getInfo(hearing), false);
+  button.addEventListener('click', function() { getInfo(hearing); }, false);
   return button;
 };
 
-const createInfoCell = hearing => {
+const createInfoCell = function(hearing) {
   let infoCell = document.createElement('td');
   infoCell.setAttribute('class', 'info-cell');
   infoCell.colSpan = '6';
   return infoCell;
 };
 
-const appendInfoRow = hearing => {
+const appendInfoRow = function(hearing) {
   deleteInfoRow(hearing);
 
   const hearingNode = hearingRow(hearing);
@@ -65,8 +87,8 @@ const appendInfoRow = hearing => {
   NodeHelpers.insertAfter(row, hearingNode);
 };
 
-const createInfoRows = (hearings, callback) => {
-  hearings.forEach(hearing => {
+const createInfoRows = function(hearings, callback) {
+  hearings.forEach(function(hearing)  {
     appendInfoRow(hearing);
     if (callback) {
       callback(hearing);
@@ -74,7 +96,7 @@ const createInfoRows = (hearings, callback) => {
   });
 };
 
-const parseHearing = node => {
+const parseHearing = function(node) {
   let timeIndex = 0;
   if (document.querySelector('.table-results tr th').textContent.trim() === "Heard") {
     timeIndex = 1;
@@ -93,11 +115,11 @@ const parseHearing = node => {
   return hearing;
 };
 
-const parseHearings = node => {
+const parseHearings = function(node) {
   return NodeHelpers.toArray(hearingNodes(node), parseHearing);
 };
 
-const updateInfoText = (hearing) => {
+const updateInfoText = function(hearing) {
   const info = hearing.info;
   setInfoText('', hearing);
   if (info) {
@@ -113,7 +135,7 @@ const updateInfoText = (hearing) => {
     const terminations = CaseReport.terminations(info);
     if(terminations) {
       let terminationsEl = document.createElement('ul');
-      terminations.forEach(termination => {
+      terminations.forEach(function(termination) {
         let li = document.createElement('li');
         li.textContent = `${termination.date} `;
         let a = document.createElement('a');
@@ -129,7 +151,7 @@ const updateInfoText = (hearing) => {
     const proofs = CaseReport.proofs(info);
     if(proofs) {
       let proofsEl = document.createElement('ul');
-      proofs.forEach(proof => {
+      proofs.forEach(function(proof) {
         let li = document.createElement('li');
         li.textContent = `${proof.date} `;
         let a = document.createElement('a');
@@ -145,7 +167,7 @@ const updateInfoText = (hearing) => {
     const deadlines = CaseReport.deadlines(info);
     if(deadlines) {
       let deadlinesEl = document.createElement('ul');
-      deadlines.forEach(deadline => {
+      deadlines.forEach(function(deadline) {
         let li = document.createElement('li');
         li.textContent = deadline.description;
         deadlinesEl.appendChild(li);
@@ -156,17 +178,17 @@ const updateInfoText = (hearing) => {
   }
 };
 
-const setCachedValue = hearing => {
+const setCachedValue = function(hearing) {
   const key = hearing.casenumber + hearing.defnbr;
   localStorage.setItem(key, JSON.stringify(hearing.info));
 };
 
-const getCachedValue = hearing => {
+const getCachedValue = function(hearing) {
   const key = hearing.casenumber + hearing.defnbr;
   hearing.info = JSON.parse(localStorage.getItem(key));
 };
 
-const toggleInfo = hearing => {
+const toggleInfo = function(hearing) {
   let infoDiv = infoCell(hearing).querySelector('div');
   if (infoDiv.style.display === '') {
     infoButton(hearing).textContent = 'Show';
@@ -177,10 +199,10 @@ const toggleInfo = hearing => {
   }
 };
 
-const createToggleButton = hearing => {
+const createToggleButton = function(hearing) {
   let button = document.createElement('button');
   button.textContent = 'Hide';
-  button.addEventListener('click', () => toggleInfo(hearing), false);
+  button.addEventListener('click', function() { toggleInfo(hearing); }, false);
   infoButtonCell(hearing).appendChild(button);
 };
 

@@ -7,7 +7,7 @@ const PROBATION_DIV_ID = `divProbationBody`;
 const PROBATION_TERMS_SELECTOR = `#${PROBATION_DIV_ID} > #table-box3 > tbody > tr`;
 const PROBATION_SUMMARY_SELECTOR = `#${PROBATION_DIV_ID} > #table-title-left td`;
 
-const parseProbationInfo = node => {
+const parseProbationInfo = function(node) {
   let result = {};
   const nodes = node.querySelectorAll(PROBATION_SUMMARY_SELECTOR);
   if (nodes && nodes.length) {
@@ -18,7 +18,7 @@ const parseProbationInfo = node => {
   return result;
 };
 
-const parseProbationTerms = node => {
+const parseProbationTerms = function(node) {
   let result = [];
   const nodes = node.querySelectorAll(PROBATION_TERMS_SELECTOR);
   if (nodes && nodes.length) {
@@ -31,7 +31,7 @@ const parseProbationTerms = node => {
   return result;
 };
 
-const parseAction = node => {
+const parseAction = function(node) {
   let result = {};
   const parent = node.parentNode;
   const cells = parent.querySelectorAll('td');
@@ -48,7 +48,7 @@ const parseAction = node => {
   return result;
 };
 
-const parseActions = html => {
+const parseActions = function(html) {
   let result = [];
   const nodes = html.querySelectorAll(ACTION_NODE_SELECTOR);
   if (nodes && nodes.length) {
@@ -57,28 +57,30 @@ const parseActions = html => {
   return result;
 };
 
-const parseActionCode = value => {
+const parseActionCode = function(value) {
   const segments = value.split(',');
   const result = segments[9];
   return result;
 };
 
-const hasDisclosure = html => {
+const hasDisclosure = function(html) {
   const text = html.body.textContent;
   const result = text.includes("DISCLOSURE FILED") || 
     text.includes("COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
   return result;
 };
-const needsDisclosure = caseReport => caseReport.needsDisclosure;
+const needsDisclosure = function(caseReport) {
+  return caseReport.needsDisclosure;
+};
 
-const isProof = action => {
+const isProof = function(action) {
   const result = (action.description.includes('PROOF OF') ||
     action.description.includes('PROGRESS REPORT')) && 
     action.imageUrl && action.imageUrl.length;
   return result;
 };
 
-const isTermination = action => {
+const isTermination = function(action) {
   const result = action.description.includes('PROGRAM TERMINATION') &&
     action.imageUrl && action.imageUrl.length;
   return result;
@@ -89,7 +91,7 @@ const isDeadline = probationTerm => {
   return result;
 };
 
-const create = (html, action) => {
+const create = function(html, action) {
   let result = {};
   result.needsDisclosure = !hasDisclosure(html);
   result.actions = parseActions(html);
@@ -98,12 +100,12 @@ const create = (html, action) => {
   return result;
 };
 
-const actions = caseReport => caseReport.actions;
-const deadlines = caseReport => caseReport.probationTerms.filter(isDeadline);
-const probationInfo = caseReport => caseReport.probationInfo;
-const probationTerms = caseReport => caseReport.probationTerms;
-const proofs = caseReport => caseReport.actions.filter(isProof); 
-const terminations = caseReport => caseReport.actions.filter(isTermination);
+const actions = function(caseReport) { return  caseReport.actions; };
+const deadlines = function(caseReport) { return  caseReport.probationTerms.filter(isDeadline); };
+const probationInfo = function(caseReport) { return  caseReport.probationInfo; };
+const probationTerms = function(caseReport) { return  caseReport.probationTerms; };
+const proofs = function(caseReport) { return  caseReport.actions.filter(isProof);  };
+const terminations = function(caseReport) { return  caseReport.actions.filter(isTermination); };
 
 let CaseReport = {};
 CaseReport.create = create;
