@@ -96,9 +96,9 @@ describe('CaseReport', () => {
 
       it("should parse probation terms", () => {
         const subject = CaseReport.probationTerms(caseReport);
-        expect(subject[0].term).to
+        expect(subject[0].description).to
           .equal('OBEY ALL LAWS, ORDINANCES, AND COURT ORDERS.');
-        expect(subject[2].term).to
+        expect(subject[2].description).to
           .equal('149 DAYS TO BE SERVED IN THE WORK RELEASE PROGRAM. ' +
             'REPORT ON OR BEFORE 07/27/2016.');
       });

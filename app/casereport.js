@@ -24,8 +24,8 @@ const parseProbationTerms = node => {
   if (nodes && nodes.length) {
     for (let i = 1, l = nodes.length; i < l; i += 1) {
       const number = parseInt(nodes[i].children[1].textContent.trim());
-      const term = nodes[i].children[3].textContent.trim();
-      result.push({number: number, term: term});
+      const description = nodes[i].children[3].textContent.trim();
+      result.push({number: number, description: description});
     }
   }
   return result;
@@ -82,7 +82,7 @@ const isTermination = action => {
 };
 
 const isDeadline = probationTerm => {
-  const result = probationTerm.term.search(/(BY|BEFORE) \d\d\/\d\d\/\d\d\d\d/) > -1;
+  const result = probationTerm.description.search(/(BY|BEFORE) \d\d\/\d\d\/\d\d\d\d/) > -1;
   return result;
 };
 
