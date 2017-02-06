@@ -2,10 +2,9 @@
 
 import { NodeHelpers } from './node-helpers';
 
-const ACTION_NODE_SELECTOR = `tr > input[id^="hidKey"]`;
-const PROBATION_DIV_ID = `divProbationBody`;
-const PROBATION_TERMS_SELECTOR = `#${PROBATION_DIV_ID} > #table-box3 > tbody > tr`;
-const PROBATION_SUMMARY_SELECTOR = `#${PROBATION_DIV_ID} > #table-title-left td`;
+const ACTION_NODE_SELECTOR = 'tr > input[id^="hidKey"]';
+const PROBATION_TERMS_SELECTOR = '#divProbationBody > #table-box3 > tbody > tr';
+const PROBATION_SUMMARY_SELECTOR = '#divProbationBody > #table-title-left td';
 
 const parseProbationInfo = function(node) {
   let result = {};

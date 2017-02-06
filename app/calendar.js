@@ -137,11 +137,11 @@ const updateInfoText = function(hearing) {
       let terminationsEl = document.createElement('ul');
       terminations.forEach(function(termination) {
         let li = document.createElement('li');
-        li.textContent = `${termination.date} `;
+        li.textContent = termination.date;
         let a = document.createElement('a');
         a.href = termination.imageUrl;
-        a.textContent = `${termination.description}`;
-        a.target = `_blank`;
+        a.textContent = termination.description;
+        a.target = '_blank';
         li.appendChild(a);
         terminationsEl.appendChild(li);
       });
@@ -153,11 +153,11 @@ const updateInfoText = function(hearing) {
       let proofsEl = document.createElement('ul');
       proofs.forEach(function(proof) {
         let li = document.createElement('li');
-        li.textContent = `${proof.date} `;
+        li.textContent = proof.date + ' ';
         let a = document.createElement('a');
         a.href = proof.imageUrl;
-        a.textContent = `${proof.description}`;
-        a.target = `_blank`;
+        a.textContent = proof.description;
+        a.target = '_blank';
         li.appendChild(a);
         proofsEl.appendChild(li);
       });

@@ -253,11 +253,11 @@ const updateInfoText = function(hearing) {
       let terminationsEl = document.createElement('ul');
       terminations.forEach(function(termination) {
         let li = document.createElement('li');
-        li.textContent = `${termination.date} `;
+        li.textContent = termination.date;
         let a = document.createElement('a');
         a.href = termination.imageUrl;
-        a.textContent = `${termination.description}`;
-        a.target = `_blank`;
+        a.textContent = termination.description;
+        a.target = '_blank';
         li.appendChild(a);
         terminationsEl.appendChild(li);
       });
@@ -269,11 +269,11 @@ const updateInfoText = function(hearing) {
       let proofsEl = document.createElement('ul');
       proofs.forEach(function(proof) {
         let li = document.createElement('li');
-        li.textContent = `${proof.date} `;
+        li.textContent = proof.date + ' ';
         let a = document.createElement('a');
         a.href = proof.imageUrl;
-        a.textContent = `${proof.description}`;
-        a.target = `_blank`;
+        a.textContent = proof.description;
+        a.target = '_blank';
         li.appendChild(a);
         proofsEl.appendChild(li);
       });
@@ -382,10 +382,9 @@ Ajax.get = get;
 
 
 
-const ACTION_NODE_SELECTOR = `tr > input[id^="hidKey"]`;
-const PROBATION_DIV_ID = `divProbationBody`;
-const PROBATION_TERMS_SELECTOR = `#${PROBATION_DIV_ID} > #table-box3 > tbody > tr`;
-const PROBATION_SUMMARY_SELECTOR = `#${PROBATION_DIV_ID} > #table-title-left td`;
+const ACTION_NODE_SELECTOR = 'tr > input[id^="hidKey"]';
+const PROBATION_TERMS_SELECTOR = '#divProbationBody > #table-box3 > tbody > tr';
+const PROBATION_SUMMARY_SELECTOR = '#divProbationBody > #table-title-left td';
 
 const parseProbationInfo = function(node) {
   let result = {};
@@ -617,7 +616,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 const hearings = __WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* Calendar */].parseHearings(document.body);
 window.hearings = hearings;
 __WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* Calendar */].createInfoRows(hearings);
-console.log(`There are ${ hearings.length } hearings.`);
+console.log('There are ' + hearings.length +  ' hearings.');
 
 
 /***/ })
