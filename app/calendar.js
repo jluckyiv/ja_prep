@@ -10,6 +10,7 @@ const hearingNodes = node  => document.querySelectorAll(HEARING_NODE_SELECTOR);
 const hearingRow = hearing => document.getElementById(hearing.nodeId);
 const infoRow = hearing => document.getElementById(hearing.infoNodeId);
 
+const infoButtonCell = hearing => infoRow(hearing).children[0];
 const infoButton = hearing => infoRow(hearing).children[0].children[0];
 const infoCell = hearing => infoRow(hearing).children[1];
 
@@ -29,6 +30,7 @@ const createInfoRow = hearing => {
 const createInfoButtonCell = hearing => {
   let buttonCell = document.createElement('td');
   buttonCell.setAttribute('class', 'info-button-cell');
+  buttonCell.setAttribute('valign', 'top');
   return buttonCell;
 };
 
@@ -94,8 +96,44 @@ const parseHearings = node => {
 
 const updateInfoText = (hearing) => {
   const info = hearing.info;
+  setInfoText('', hearing);
   if (info) {
-    setInfoText(JSON.stringify(info), hearing);
+    NodeHelpers.removeNode(infoCell(hearing).querySelector('div'));
+
+    let infoDiv = document.createElement('div');
+    const needsDisclosure = CaseReport.needsDisclosure(info);
+
+    let disclosureEl = document.createElement('p');
+    disclosureEl.textContent = CaseReport.needsDisclosure(info) ? 'Needs disclosure.' : 'Disclosure given';
+    infoDiv.appendChild(disclosureEl);
+
+    const proofs = CaseReport.proofs(info);
+    if(proofs) {
+      let proofsEl = document.createElement('ul');
+      proofs.forEach(proof => {
+        let li = document.createElement('li');
+        li.textContent = `${proof.date} `;
+        let a = document.createElement('a');
+        a.href = proof.imageUrl;
+        a.textContent = `${proof.description}`;
+        a.target = `_blank`;
+        li.appendChild(a);
+        proofsEl.appendChild(li);
+      });
+      infoDiv.appendChild(proofsEl);
+    }
+
+    const deadlines = CaseReport.deadlines(info);
+    if(deadlines) {
+      let deadlinesEl = document.createElement('ul');
+      deadlines.forEach(deadline => {
+        let li = document.createElement('li');
+        li.textContent = deadline.description;
+        deadlinesEl.appendChild(li);
+      });
+      infoDiv.appendChild(deadlinesEl);
+    }
+    infoCell(hearing).appendChild(infoDiv);
   }
 };
 
@@ -109,6 +147,24 @@ const getCachedValue = hearing => {
   hearing.info = JSON.parse(localStorage.getItem(key));
 };
 
+const toggleInfo = hearing => {
+  let infoDiv = infoCell(hearing).querySelector('div');
+  if (infoDiv.style.display === '') {
+    infoButton(hearing).textContent = 'Show';
+    infoDiv.style.display = 'none';
+  } else {
+    infoButton(hearing).textContent = 'Hide';
+    infoDiv.style.display = '';
+  }
+};
+
+const createToggleButton = hearing => {
+  let button = document.createElement('button');
+  button.textContent = 'Hide';
+  button.addEventListener('click', () => toggleInfo(hearing), false);
+  infoButtonCell(hearing).appendChild(button);
+};
+
 const getInfo = function(hearing) {
   setButtonText('Updating', hearing);
   setInfoText('Loading info for ' + hearing.casenumber, hearing);
@@ -116,10 +172,12 @@ const getInfo = function(hearing) {
   getCachedValue(hearing);
   updateInfoText(hearing);
   Ajax.get(hearing.urls.report, function() {
+    // setButtonText('Updated', hearing);
+    NodeHelpers.removeNode(infoButton(hearing));
+    createToggleButton(hearing);
     hearing.info = CaseReport.create(this.responseXML, hearing);
     setCachedValue(hearing);
     updateInfoText(hearing);
-    setButtonText('Loaded', hearing);
   });
 };
 
