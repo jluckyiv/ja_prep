@@ -4,5 +4,5 @@ import { Calendar } from './calendar';
 
 const hearings = Calendar.parseHearings(document.body);
 window.hearings = hearings;
-Calendar.addInfoRows(hearings);
+Calendar.createInfoRows(hearings);
 console.log(`There are ${ hearings.length } hearings.`);
