@@ -1,16 +1,16 @@
 /*jshint esversion: 6 */
 
-const insertAfter = function(newNode, referenceNode) {
+const insertAfter = (newNode, referenceNode) => {
   const parent = referenceNode.parentNode;
   const next = referenceNode.nextElementSibling;
   parent.insertBefore(newNode, next);
 };
 
-const removeNode = function(node) {
+const removeNode = (node) => {
   if (node) { node.parentNode.removeChild(node); }
 };
 
-const toArray = function(nodeList, callback) {
+const toArray = (nodeList, callback) => {
   let a = [];
   for (let i = 0, l = nodeList.length; i < l; i += 1) {
     if (callback) {

@@ -6,11 +6,11 @@ const ACTION_NODE_SELECTOR = 'tr > input[id^="hidKey"]';
 const PROBATION_TERMS_SELECTOR = '#divProbationBody > #table-box3 > tbody > tr';
 const PROBATION_SUMMARY_SELECTOR = '#divProbationBody > #table-title-left td';
 
-const includes= function(text, searchTerm) {
+const includes = (text, searchTerm) => {
   return text.indexOf(searchTerm) > -1;
 };
 
-const parseProbationInfo = function(node) {
+const parseProbationInfo = (node) => {
   let result = {};
   const nodes = node.querySelectorAll(PROBATION_SUMMARY_SELECTOR);
   if (nodes && nodes.length) {
@@ -21,7 +21,7 @@ const parseProbationInfo = function(node) {
   return result;
 };
 
-const parseProbationTerms = function(node) {
+const parseProbationTerms = (node) => {
   let result = [];
   const nodes = node.querySelectorAll(PROBATION_TERMS_SELECTOR);
   if (nodes && nodes.length) {
@@ -34,7 +34,7 @@ const parseProbationTerms = function(node) {
   return result;
 };
 
-const parseAction = function(node) {
+const parseAction = (node) => {
   let result = {};
   const parent = node.parentNode;
   const cells = parent.querySelectorAll('td');
@@ -51,7 +51,7 @@ const parseAction = function(node) {
   return result;
 };
 
-const parseActions = function(html) {
+const parseActions = (html) => {
   let result = [];
   const nodes = html.querySelectorAll(ACTION_NODE_SELECTOR);
   if (nodes && nodes.length) {
@@ -60,65 +60,76 @@ const parseActions = function(html) {
   return result;
 };
 
-const parseActionCode = function(value) {
+const parseActionCode = (value) => {
   const segments = value.split(',');
   const result = segments[9];
   return result;
 };
 
-const hasDisclosure = function(html) {
+const hasDisclosure = (html) => {
   const text = html.body.textContent;
   const result = includes(text, "DISCLOSURE FILED") || 
     includes(text, "COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
   return result;
 };
-const needsDisclosure = function(caseReport) {
-  return caseReport.needsDisclosure;
-};
-
-const isProof = function(action) {
+const isProof = (action) => {
   const result = (includes(action.description, 'PROOF OF') ||
     includes(action.description, 'PROGRESS REPORT')) && 
     action.imageUrl && action.imageUrl.length;
   return result;
 };
 
-const isTermination = function(action) {
+const isTermination = (action) => {
   const result = includes(action.description, 'PROGRAM TERMINATION') &&
     action.imageUrl && action.imageUrl.length;
   return result;
 };
 
-const isDeadline = function(probationTerm) {
+const isDeadline = (probationTerm) => {
   const result = probationTerm.description.search(/(BY|BEFORE) \d\d\/\d\d\/\d\d\d\d/) > -1;
   return result;
 };
 
-const create = function(html, action) {
+const isSentencingMemorandum = (action) => {
+  if (action.description && action.description.length) {
+    return action.description.search(/SENTENCING MEMORANDUM/) != -1;
+  } else {
+    return false;
+  }
+};
+
+const create = (html, action) => {
   let result = {};
-  result.needsDisclosure = !hasDisclosure(html);
-  result.actions = parseActions(html);
+  const needsDisclosure = !hasDisclosure(html);
+  const actions = parseActions(html);
+  result.needsDisclosure = needsDisclosure;
+  result.actions = actions;
   result.probationTerms = parseProbationTerms(html); 
   result.probationInfo = parseProbationInfo(html);
   return result;
 };
 
-const actions = function(caseReport) { return  caseReport.actions; };
-const deadlines = function(caseReport) { return  caseReport.probationTerms.filter(isDeadline); };
-const probationInfo = function(caseReport) { return  caseReport.probationInfo; };
-const probationTerms = function(caseReport) { return  caseReport.probationTerms; };
-const proofs = function(caseReport) { return  caseReport.actions.filter(isProof);  };
-const terminations = function(caseReport) { return  caseReport.actions.filter(isTermination); };
+const actions = (caseReport) => { return caseReport.actions; };
+const deadlines = (caseReport) => { return caseReport.probationTerms.filter(isDeadline); };
+const needsDisclosure = (caseReport) => { return caseReport.needsDisclosure; };
+const probationInfo = (caseReport) => { return caseReport.probationInfo; };
+const probationTerms = (caseReport) => { return caseReport.probationTerms; };
+const proofs = (caseReport) => { return caseReport.actions.filter(isProof);  };
+const sentencingMemoranda = (caseReport) => { return caseReport.actions.filter(isSentencingMemorandum); };
+const terminations = (caseReport) => { return caseReport.actions.filter(isTermination); };
+
 
 let CaseReport = {};
 CaseReport.create = create;
-CaseReport.actions = actions;
-CaseReport.needsDisclosure = needsDisclosure;
 CaseReport.parseActionCode = parseActionCode;
+
+CaseReport.actions = actions;
+CaseReport.deadlines = deadlines;
+CaseReport.needsDisclosure = needsDisclosure;
 CaseReport.probationInfo = probationInfo;
 CaseReport.probationTerms = probationTerms;
-CaseReport.terminations = terminations;
 CaseReport.proofs = proofs;
-CaseReport.deadlines = deadlines;
+CaseReport.sentencingMemoranda = sentencingMemoranda;
+CaseReport.terminations = terminations;
 
 export { CaseReport };

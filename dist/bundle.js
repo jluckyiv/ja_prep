@@ -68,25 +68,31 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NodeHelpers; });
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*jshint esversion: 6 */
 
-const insertAfter = function(newNode, referenceNode) {
-  const parent = referenceNode.parentNode;
-  const next = referenceNode.nextElementSibling;
+var insertAfter = function insertAfter(newNode, referenceNode) {
+  var parent = referenceNode.parentNode;
+  var next = referenceNode.nextElementSibling;
   parent.insertBefore(newNode, next);
 };
 
-const removeNode = function(node) {
-  if (node) { node.parentNode.removeChild(node); }
+var removeNode = function removeNode(node) {
+  if (node) {
+    node.parentNode.removeChild(node);
+  }
 };
 
-const toArray = function(nodeList, callback) {
-  let a = [];
-  for (let i = 0, l = nodeList.length; i < l; i += 1) {
+var toArray = function toArray(nodeList, callback) {
+  var a = [];
+  for (var i = 0, l = nodeList.length; i < l; i += 1) {
     if (callback) {
       a[a.length] = callback(nodeList[i]);
     } else {
@@ -96,115 +102,121 @@ const toArray = function(nodeList, callback) {
   return a;
 };
 
-let NodeHelpers = {};
+var NodeHelpers = {};
 NodeHelpers.insertAfter = insertAfter;
 NodeHelpers.removeNode = removeNode;
 NodeHelpers.toArray = toArray;
 
-
-
+exports.NodeHelpers = NodeHelpers;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ajax__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__casereport__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_helpers__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__urls__ = __webpack_require__(4);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Calendar; });
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Calendar = undefined;
+
+var _ajax = __webpack_require__(2);
+
+var _casereport = __webpack_require__(3);
+
+var _nodeHelpers = __webpack_require__(0);
+
+var _urls = __webpack_require__(4);
+
 /*jshint esversion: 6 */
 
-
-
-
-
-
-const HEARING_NODE_SELECTOR = 'tr[id^="tr_row"]';
-const hearingNodes = function(node) {
+var HEARING_NODE_SELECTOR = 'tr[id^="tr_row"]';
+var hearingNodes = function hearingNodes(node) {
   return document.querySelectorAll(HEARING_NODE_SELECTOR);
 };
-const hearingRow = function(hearing) {
+var hearingRow = function hearingRow(hearing) {
   return document.getElementById(hearing.nodeId);
 };
-const infoRow = function(hearing) {
+var infoRow = function infoRow(hearing) {
   return document.getElementById(hearing.infoNodeId);
 };
 
-const infoButtonCell = function(hearing) {
+var infoButtonCell = function infoButtonCell(hearing) {
   return infoRow(hearing).children[0];
 };
-const infoButton = function(hearing) {
+var infoButton = function infoButton(hearing) {
   return infoRow(hearing).children[0].children[0];
 };
-const infoCell = function(hearing) {
+var infoCell = function infoCell(hearing) {
   return infoRow(hearing).children[1];
 };
 
-const setButtonText = function(text, hearing) {
+var setButtonText = function setButtonText(text, hearing) {
   infoButton(hearing).textContent = text;
 };
-const disableButton = function(hearing) {
+var disableButton = function disableButton(hearing) {
   infoButton(hearing).disabled = true;
 };
-const enableButton = function(hearing) {
+var enableButton = function enableButton(hearing) {
   infoButton(hearing).disabled = false;
 };
-const setInfoText = function(text, hearing) {
+var setInfoText = function setInfoText(text, hearing) {
   infoCell(hearing).textContent = text;
 };
 
-const deleteInfoRow = function(hearing) {
-  return __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].removeNode(infoRow(hearing));
+var deleteInfoRow = function deleteInfoRow(hearing) {
+  return _nodeHelpers.NodeHelpers.removeNode(infoRow(hearing));
 };
-const createInfoRow = function(hearing) {
-  let row = document.createElement('tr');
+var createInfoRow = function createInfoRow(hearing) {
+  var row = document.createElement('tr');
   row.id = hearing.infoNodeId;
   row.setAttribute('class', 'hearing-info');
   return row;
 };
 
-const createInfoButtonCell = function(hearing) {
-  let buttonCell = document.createElement('td');
+var createInfoButtonCell = function createInfoButtonCell(hearing) {
+  var buttonCell = document.createElement('td');
   buttonCell.setAttribute('class', 'info-button-cell');
   buttonCell.setAttribute('valign', 'top');
   return buttonCell;
 };
 
-const createInfoButton = function(hearing) {
-  let button = document.createElement('button');
+var createInfoButton = function createInfoButton(hearing) {
+  var button = document.createElement('button');
   button.textContent = 'Info';
   button.setAttribute('class', 'info-button');
-  button.addEventListener('click', function() { getInfo(hearing); }, false);
+  button.addEventListener('click', function () {
+    getInfo(hearing);
+  }, false);
   return button;
 };
 
-const createInfoCell = function(hearing) {
-  let infoCell = document.createElement('td');
+var createInfoCell = function createInfoCell(hearing) {
+  var infoCell = document.createElement('td');
   infoCell.setAttribute('class', 'info-cell');
   infoCell.colSpan = '6';
   return infoCell;
 };
 
-const appendInfoRow = function(hearing) {
+var appendInfoRow = function appendInfoRow(hearing) {
   deleteInfoRow(hearing);
 
-  const hearingNode = hearingRow(hearing);
-  let row = createInfoRow(hearing);
-  let buttonCell = createInfoButtonCell(hearing);
-  let button = createInfoButton(hearing);
-  let infoCell = createInfoCell(hearing);
+  var hearingNode = hearingRow(hearing);
+  var row = createInfoRow(hearing);
+  var buttonCell = createInfoButtonCell(hearing);
+  var button = createInfoButton(hearing);
+  var infoCell = createInfoCell(hearing);
 
   buttonCell.appendChild(button);
   row.appendChild(buttonCell);
   row.appendChild(infoCell);
   row.style.display = hearingNode.style.display;
-  __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].insertAfter(row, hearingNode);
+  _nodeHelpers.NodeHelpers.insertAfter(row, hearingNode);
 };
 
-const createInfoRows = function(hearings, callback) {
-  hearings.forEach(function(hearing)  {
+var createInfoRows = function createInfoRows(hearings, callback) {
+  hearings.forEach(function (hearing) {
     appendInfoRow(hearing);
     if (callback) {
       callback(hearing);
@@ -212,106 +224,111 @@ const createInfoRows = function(hearings, callback) {
   });
 };
 
-const parseHearing = function(node) {
-  let timeIndex = 0;
+var parseHearing = function parseHearing(node) {
+  var timeIndex = 0;
   if (document.querySelector('.table-results tr th').textContent.trim() === "Heard") {
     timeIndex = 1;
   }
-  let hearing = {};
+  var hearing = {};
   hearing.nodeId = node.id;
   hearing.infoNodeId = 'info_' + node.id;
   hearing.time = node.children[timeIndex].textContent.trim();
   hearing.casenumber = node.children[timeIndex + 1].textContent.trim();
   hearing.name = node.children[timeIndex + 2].textContent.trim();
-  hearing.defnbr = node.children[timeIndex + 1].querySelector('a').href
-    .match(/defnbr=(\d+)/)[1];
+  hearing.defnbr = node.children[timeIndex + 1].querySelector('a').href.match(/defnbr=(\d+)/)[1];
   hearing.description = node.children[timeIndex + 3].textContent.trim();
   hearing.charges = node.children[timeIndex + 4].textContent.trim();
-  hearing.urls = __WEBPACK_IMPORTED_MODULE_3__urls__["a" /* Urls */].urls(hearing);
+  hearing.urls = _urls.Urls.urls(hearing);
   return hearing;
 };
 
-const parseHearings = function(node) {
-  return __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].toArray(hearingNodes(node), parseHearing);
+var parseHearings = function parseHearings(node) {
+  return _nodeHelpers.NodeHelpers.toArray(hearingNodes(node), parseHearing);
 };
 
-const updateInfoText = function(hearing) {
-  const info = hearing.info;
+var updateInfoText = function updateInfoText(hearing) {
+  var info = hearing.info;
   setInfoText('', hearing);
   if (info) {
-    __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].removeNode(infoCell(hearing).querySelector('div'));
+    _nodeHelpers.NodeHelpers.removeNode(infoCell(hearing).querySelector('div'));
 
-    let infoDiv = document.createElement('div');
-    const needsDisclosure = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].needsDisclosure(info);
+    var infoDiv = document.createElement('div');
+    var needsDisclosure = _casereport.CaseReport.needsDisclosure(info);
 
-    let disclosureEl = document.createElement('p');
-    disclosureEl.textContent = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].needsDisclosure(info) ? 'Needs disclosure.' : 'Disclosure given';
+    var disclosureEl = document.createElement('p');
+    disclosureEl.textContent = _casereport.CaseReport.needsDisclosure(info) ? 'Needs disclosure.' : 'Disclosure given';
     infoDiv.appendChild(disclosureEl);
 
-    const terminations = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].terminations(info);
-    if(terminations) {
-      let terminationsEl = document.createElement('ul');
-      terminations.forEach(function(termination) {
-        let li = document.createElement('li');
-        li.textContent = termination.date + ' ';
-        let a = document.createElement('a');
-        a.href = termination.imageUrl;
-        a.textContent = termination.description;
-        a.target = '_blank';
-        li.appendChild(a);
-        terminationsEl.appendChild(li);
-      });
-      infoDiv.appendChild(terminationsEl);
+    var terminations = _casereport.CaseReport.terminations(info);
+    if (terminations) {
+      (function () {
+        var terminationsEl = document.createElement('ul');
+        terminations.forEach(function (termination) {
+          var li = document.createElement('li');
+          li.textContent = termination.date + ' ';
+          var a = document.createElement('a');
+          a.href = termination.imageUrl;
+          a.textContent = termination.description;
+          a.target = '_blank';
+          li.appendChild(a);
+          terminationsEl.appendChild(li);
+        });
+        infoDiv.appendChild(terminationsEl);
+      })();
     }
 
-    const proofs = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].proofs(info);
-    if(proofs) {
-      let proofsEl = document.createElement('ul');
-      proofs.forEach(function(proof) {
-        let li = document.createElement('li');
-        li.textContent = proof.date + ' ';
-        let a = document.createElement('a');
-        a.href = proof.imageUrl;
-        a.textContent = proof.description;
-        a.target = '_blank';
-        li.appendChild(a);
-        proofsEl.appendChild(li);
-      });
-      infoDiv.appendChild(proofsEl);
+    var proofs = _casereport.CaseReport.proofs(info);
+    if (proofs) {
+      (function () {
+        var proofsEl = document.createElement('ul');
+        proofs.forEach(function (proof) {
+          var li = document.createElement('li');
+          li.textContent = proof.date + ' ';
+          var a = document.createElement('a');
+          a.href = proof.imageUrl;
+          a.textContent = proof.description;
+          a.target = '_blank';
+          li.appendChild(a);
+          proofsEl.appendChild(li);
+        });
+        infoDiv.appendChild(proofsEl);
+      })();
     }
 
-    const deadlines = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].deadlines(info);
-    if(deadlines) {
-      let deadlinesEl = document.createElement('ul');
-      deadlinesEl.style.listStyle = 'none';
-      deadlines.forEach(function(deadline) {
-        let li = document.createElement('li');
-        let number = document.createElement('span');
-        li.appendChild(number);
-        let description = document.createElement('span');
-        li.appendChild(description);
-        li.textContent = deadline.number + '. ' + deadline.description;
-        li.style.textIndent = '-2em';
-        deadlinesEl.appendChild(li);
-      });
-      infoDiv.appendChild(deadlinesEl);
+    var deadlines = _casereport.CaseReport.deadlines(info);
+    if (deadlines) {
+      (function () {
+        var deadlinesEl = document.createElement('ul');
+        deadlinesEl.style.listStyle = 'none';
+        deadlines.forEach(function (deadline) {
+          var li = document.createElement('li');
+          var number = document.createElement('span');
+          li.appendChild(number);
+          var description = document.createElement('span');
+          li.appendChild(description);
+          li.textContent = deadline.number + '. ' + deadline.description;
+          li.style.textIndent = '-2em';
+          deadlinesEl.appendChild(li);
+        });
+        infoDiv.appendChild(deadlinesEl);
+      })();
     }
     infoCell(hearing).appendChild(infoDiv);
   }
 };
 
-const setCachedValue = function(hearing) {
-  const key = hearing.casenumber + hearing.defnbr;
+var setCachedValue = function setCachedValue(hearing) {
+  var key = hearing.casenumber + hearing.defnbr;
   localStorage.setItem(key, JSON.stringify(hearing.info));
 };
 
-const getCachedValue = function(hearing) {
-  const key = hearing.casenumber + hearing.defnbr;
+var getCachedValue = function getCachedValue(hearing) {
+  var key = hearing.casenumber + hearing.defnbr;
   hearing.info = JSON.parse(localStorage.getItem(key));
 };
 
-const toggleInfo = function(hearing) {
-  let infoDiv = infoCell(hearing).querySelector('div');
+var toggleInfo = function toggleInfo(hearing) {
+  var infoDiv = infoCell(hearing).querySelector('div');
   if (infoDiv.style.display === '') {
     infoButton(hearing).textContent = 'Show';
     infoDiv.style.display = 'none';
@@ -321,84 +338,92 @@ const toggleInfo = function(hearing) {
   }
 };
 
-const createToggleButton = function(hearing) {
-  let button = document.createElement('button');
+var createToggleButton = function createToggleButton(hearing) {
+  var button = document.createElement('button');
   button.textContent = 'Hide';
-  button.addEventListener('click', function() { toggleInfo(hearing); }, false);
+  button.addEventListener('click', function () {
+    toggleInfo(hearing);
+  }, false);
   infoButtonCell(hearing).appendChild(button);
 };
 
-const getInfo = function(hearing) {
+var getInfo = function getInfo(hearing) {
   setButtonText('Updating', hearing);
   setInfoText('Loading info for ' + hearing.casenumber, hearing);
   disableButton(hearing);
   getCachedValue(hearing);
   updateInfoText(hearing);
-  __WEBPACK_IMPORTED_MODULE_0__ajax__["a" /* Ajax */].get(hearing.urls.report, function() {
+  _ajax.Ajax.get(hearing.urls.report, function () {
     // setButtonText('Updated', hearing);
-    __WEBPACK_IMPORTED_MODULE_2__node_helpers__["a" /* NodeHelpers */].removeNode(infoButton(hearing));
+    _nodeHelpers.NodeHelpers.removeNode(infoButton(hearing));
     createToggleButton(hearing);
-    hearing.info = __WEBPACK_IMPORTED_MODULE_1__casereport__["a" /* CaseReport */].create(this.responseXML, hearing);
+    hearing.info = _casereport.CaseReport.create(this.responseXML, hearing);
     setCachedValue(hearing);
     updateInfoText(hearing);
   });
 };
 
-let Calendar = {};
+var Calendar = {};
 Calendar.createInfoRows = createInfoRows;
 Calendar.parseHearings = parseHearings;
 
-
-
+exports.Calendar = Calendar;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Ajax; });
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*jshint esversion: 6 */
 
-const logResponse = function () {
+var logResponse = function logResponse() {
   console.log(this.responseText);
 };
 
-const get = function(url, callback) {
-  let xhr = new XMLHttpRequest();
+var get = function get(url, callback) {
+  var xhr = new XMLHttpRequest();
   xhr.addEventListener('load', callback);
   xhr.open('GET', url);
   xhr.send();
   xhr.responseType = 'document';
 };
 
-let Ajax = {};
+var Ajax = {};
 Ajax.get = get;
 
-
-
+exports.Ajax = Ajax;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_helpers__ = __webpack_require__(0);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CaseReport; });
-/*jshint esversion: 6 */
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CaseReport = undefined;
 
-const ACTION_NODE_SELECTOR = 'tr > input[id^="hidKey"]';
-const PROBATION_TERMS_SELECTOR = '#divProbationBody > #table-box3 > tbody > tr';
-const PROBATION_SUMMARY_SELECTOR = '#divProbationBody > #table-title-left td';
+var _nodeHelpers = __webpack_require__(0);
 
-const includes= function(text, searchTerm) {
+var ACTION_NODE_SELECTOR = 'tr > input[id^="hidKey"]'; /*jshint esversion: 6 */
+
+var PROBATION_TERMS_SELECTOR = '#divProbationBody > #table-box3 > tbody > tr';
+var PROBATION_SUMMARY_SELECTOR = '#divProbationBody > #table-title-left td';
+
+var includes = function includes(text, searchTerm) {
   return text.indexOf(searchTerm) > -1;
 };
 
-const parseProbationInfo = function(node) {
-  let result = {};
-  const nodes = node.querySelectorAll(PROBATION_SUMMARY_SELECTOR);
+var parseProbationInfo = function parseProbationInfo(node) {
+  var result = {};
+  var nodes = node.querySelectorAll(PROBATION_SUMMARY_SELECTOR);
   if (nodes && nodes.length) {
     result.type = nodes[0].textContent.trim();
     result.granted = nodes[1].textContent.trim();
@@ -407,118 +432,149 @@ const parseProbationInfo = function(node) {
   return result;
 };
 
-const parseProbationTerms = function(node) {
-  let result = [];
-  const nodes = node.querySelectorAll(PROBATION_TERMS_SELECTOR);
+var parseProbationTerms = function parseProbationTerms(node) {
+  var result = [];
+  var nodes = node.querySelectorAll(PROBATION_TERMS_SELECTOR);
   if (nodes && nodes.length) {
-    for (let i = 1, l = nodes.length; i < l; i += 1) {
-      const number = parseInt(nodes[i].children[1].textContent.trim());
-      const description = nodes[i].children[3].textContent.trim();
-      result.push({number: number, description: description});
+    for (var i = 1, l = nodes.length; i < l; i += 1) {
+      var number = parseInt(nodes[i].children[1].textContent.trim());
+      var description = nodes[i].children[3].textContent.trim();
+      result.push({ number: number, description: description });
     }
   }
   return result;
 };
 
-const parseAction = function(node) {
-  let result = {};
-  const parent = node.parentNode;
-  const cells = parent.querySelectorAll('td');
+var parseAction = function parseAction(node) {
+  var result = {};
+  var parent = node.parentNode;
+  var cells = parent.querySelectorAll('td');
 
   result.code = parseActionCode(node.value).trim();
-  result.date = cells[0].textContent.trim().substr(0,10);
+  result.date = cells[0].textContent.trim().substr(0, 10);
   result.description = cells[1].textContent.trim();
-  const disposition = cells[2].textContent.trim();
-  if (disposition) { result.disposition = disposition; }
-  const actionType = cells[3].textContent.trim();
-  if (actionType) { result.actionType = actionType; }
-  const imageLink = cells[5].querySelector('a');
-  if (imageLink) { result.imageUrl = imageLink.href.replace('..', 'http://riv-ja1/JA'); }
-  return result;
-};
-
-const parseActions = function(html) {
-  let result = [];
-  const nodes = html.querySelectorAll(ACTION_NODE_SELECTOR);
-  if (nodes && nodes.length) {
-    result = result.concat(__WEBPACK_IMPORTED_MODULE_0__node_helpers__["a" /* NodeHelpers */].toArray(nodes, parseAction));
+  var disposition = cells[2].textContent.trim();
+  if (disposition) {
+    result.disposition = disposition;
+  }
+  var actionType = cells[3].textContent.trim();
+  if (actionType) {
+    result.actionType = actionType;
+  }
+  var imageLink = cells[5].querySelector('a');
+  if (imageLink) {
+    result.imageUrl = imageLink.href.replace('..', 'http://riv-ja1/JA');
   }
   return result;
 };
 
-const parseActionCode = function(value) {
-  const segments = value.split(',');
-  const result = segments[9];
+var parseActions = function parseActions(html) {
+  var result = [];
+  var nodes = html.querySelectorAll(ACTION_NODE_SELECTOR);
+  if (nodes && nodes.length) {
+    result = result.concat(_nodeHelpers.NodeHelpers.toArray(nodes, parseAction));
+  }
   return result;
 };
 
-const hasDisclosure = function(html) {
-  const text = html.body.textContent;
-  const result = includes(text, "DISCLOSURE FILED") || 
-    includes(text, "COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
-  return result;
-};
-const needsDisclosure = function(caseReport) {
-  return caseReport.needsDisclosure;
-};
-
-const isProof = function(action) {
-  const result = (includes(action.description, 'PROOF OF') ||
-    includes(action.description, 'PROGRESS REPORT')) && 
-    action.imageUrl && action.imageUrl.length;
+var parseActionCode = function parseActionCode(value) {
+  var segments = value.split(',');
+  var result = segments[9];
   return result;
 };
 
-const isTermination = function(action) {
-  const result = includes(action.description, 'PROGRAM TERMINATION') &&
-    action.imageUrl && action.imageUrl.length;
+var hasDisclosure = function hasDisclosure(html) {
+  var text = html.body.textContent;
+  var result = includes(text, "DISCLOSURE FILED") || includes(text, "COURT DISCLOSES THAT JUDGE LUCKY'S WIFE");
+  return result;
+};
+var isProof = function isProof(action) {
+  var result = (includes(action.description, 'PROOF OF') || includes(action.description, 'PROGRESS REPORT')) && action.imageUrl && action.imageUrl.length;
   return result;
 };
 
-const isDeadline = function(probationTerm) {
-  const result = probationTerm.description.search(/(BY|BEFORE) \d\d\/\d\d\/\d\d\d\d/) > -1;
+var isTermination = function isTermination(action) {
+  var result = includes(action.description, 'PROGRAM TERMINATION') && action.imageUrl && action.imageUrl.length;
   return result;
 };
 
-const create = function(html, action) {
-  let result = {};
-  result.needsDisclosure = !hasDisclosure(html);
-  result.actions = parseActions(html);
-  result.probationTerms = parseProbationTerms(html); 
+var isDeadline = function isDeadline(probationTerm) {
+  var result = probationTerm.description.search(/(BY|BEFORE) \d\d\/\d\d\/\d\d\d\d/) > -1;
+  return result;
+};
+
+var isSentencingMemorandum = function isSentencingMemorandum(action) {
+  if (action.description && action.description.length) {
+    return action.description.search(/SENTENCING MEMORANDUM/) != -1;
+  } else {
+    return false;
+  }
+};
+
+var create = function create(html, action) {
+  var result = {};
+  var needsDisclosure = !hasDisclosure(html);
+  var actions = parseActions(html);
+  result.needsDisclosure = needsDisclosure;
+  result.actions = actions;
+  result.probationTerms = parseProbationTerms(html);
   result.probationInfo = parseProbationInfo(html);
   return result;
 };
 
-const actions = function(caseReport) { return  caseReport.actions; };
-const deadlines = function(caseReport) { return  caseReport.probationTerms.filter(isDeadline); };
-const probationInfo = function(caseReport) { return  caseReport.probationInfo; };
-const probationTerms = function(caseReport) { return  caseReport.probationTerms; };
-const proofs = function(caseReport) { return  caseReport.actions.filter(isProof);  };
-const terminations = function(caseReport) { return  caseReport.actions.filter(isTermination); };
+var actions = function actions(caseReport) {
+  return caseReport.actions;
+};
+var deadlines = function deadlines(caseReport) {
+  return caseReport.probationTerms.filter(isDeadline);
+};
+var needsDisclosure = function needsDisclosure(caseReport) {
+  return caseReport.needsDisclosure;
+};
+var probationInfo = function probationInfo(caseReport) {
+  return caseReport.probationInfo;
+};
+var probationTerms = function probationTerms(caseReport) {
+  return caseReport.probationTerms;
+};
+var proofs = function proofs(caseReport) {
+  return caseReport.actions.filter(isProof);
+};
+var sentencingMemoranda = function sentencingMemoranda(caseReport) {
+  return caseReport.actions.filter(isSentencingMemorandum);
+};
+var terminations = function terminations(caseReport) {
+  return caseReport.actions.filter(isTermination);
+};
 
-let CaseReport = {};
+var CaseReport = {};
 CaseReport.create = create;
-CaseReport.actions = actions;
-CaseReport.needsDisclosure = needsDisclosure;
 CaseReport.parseActionCode = parseActionCode;
+
+CaseReport.actions = actions;
+CaseReport.deadlines = deadlines;
+CaseReport.needsDisclosure = needsDisclosure;
 CaseReport.probationInfo = probationInfo;
 CaseReport.probationTerms = probationTerms;
-CaseReport.terminations = terminations;
 CaseReport.proofs = proofs;
-CaseReport.deadlines = deadlines;
+CaseReport.sentencingMemoranda = sentencingMemoranda;
+CaseReport.terminations = terminations;
 
-
-
+exports.CaseReport = CaseReport;
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Urls; });
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /*jshint esversion: 6 */
 
-const pageSegment = function(page) {
+var pageSegment = function pageSegment(page) {
   switch (page) {
     case 'actions':
       return 'actionlist';
@@ -549,8 +605,8 @@ const pageSegment = function(page) {
   }
 };
 
-const lastSegment = function(page) {
-  const segment = '&defseq=1&otnmseq=0&fmt=auto';
+var lastSegment = function lastSegment(page) {
+  var segment = '&defseq=1&otnmseq=0&fmt=auto';
   if (page === 'actions') {
     return segment + '&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
   } else {
@@ -558,18 +614,13 @@ const lastSegment = function(page) {
   }
 };
 
-const url = function(page, casenumber, defnbr) {
-  return 'http://riv-ja1/JA/criminal/' +
-    pageSegment(page) + '.asp' +
-    '?casenumber=' + casenumber +
-    '&courtcode=C' +
-    '&defnbr=' + defnbr +
-    lastSegment(page);
+var url = function url(page, casenumber, defnbr) {
+  return 'http://riv-ja1/JA/criminal/' + pageSegment(page) + '.asp' + '?casenumber=' + casenumber + '&courtcode=C' + '&defnbr=' + defnbr + lastSegment(page);
 };
 
-const urls = function(data) {
-  const casenumber = data.casenumber;
-  const defnbr = data.defnbr;
+var urls = function urls(data) {
+  var casenumber = data.casenumber;
+  var defnbr = data.defnbr;
   return {
     actions: url('actions', casenumber, defnbr),
     report: url('report', casenumber, defnbr),
@@ -586,10 +637,10 @@ const urls = function(data) {
   };
 };
 
-let Urls = {};
+var Urls = {};
 Urls.urls = urls;
 
-
+exports.Urls = Urls;
 
 /* 
  * http://riv-ja1/JA/criminal/actionlist.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y
@@ -610,24 +661,20 @@ Urls.urls = urls;
  * http://riv-ja1/JA/criminal/perm.asp?casenumber=RIM1612193&courtcode=C&defnbr=4016210&defseq=1&otnmseq=0&fmt=auto&row=0&MDrow=0
  */
 
-
-
 /***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__calendar__ = __webpack_require__(1);
-/*jshint esversion: 6 */
 
 
+var _calendar = __webpack_require__(1);
 
-const hearings = __WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* Calendar */].parseHearings(document.body);
+var hearings = _calendar.Calendar.parseHearings(document.body); /*jshint esversion: 6 */
+
 window.hearings = hearings;
-__WEBPACK_IMPORTED_MODULE_0__calendar__["a" /* Calendar */].createInfoRows(hearings);
-console.log('There are ' + hearings.length +  ' hearings.');
-
+_calendar.Calendar.createInfoRows(hearings);
+console.log('There are ' + hearings.length + ' hearings.');
 
 /***/ })
 /******/ ]);

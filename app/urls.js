@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-const pageSegment = function(page) {
+const pageSegment = (page) => {
   switch (page) {
     case 'actions':
       return 'actionlist';
@@ -31,7 +31,7 @@ const pageSegment = function(page) {
   }
 };
 
-const lastSegment = function(page) {
+const lastSegment = (page) => {
   const segment = '&defseq=1&otnmseq=0&fmt=auto';
   if (page === 'actions') {
     return segment + '&actionlist=HCSBWRV&relatedcases=Y&alldefendantcases=Y';
@@ -40,7 +40,7 @@ const lastSegment = function(page) {
   }
 };
 
-const url = function(page, casenumber, defnbr) {
+const url = (page, casenumber, defnbr) => {
   return 'http://riv-ja1/JA/criminal/' +
     pageSegment(page) + '.asp' +
     '?casenumber=' + casenumber +
@@ -49,7 +49,7 @@ const url = function(page, casenumber, defnbr) {
     lastSegment(page);
 };
 
-const urls = function(data) {
+const urls = (data) => {
   const casenumber = data.casenumber;
   const defnbr = data.defnbr;
   return {

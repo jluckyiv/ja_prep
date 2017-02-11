@@ -62,7 +62,7 @@ describe('CaseReport', () => {
         caseReport = CaseReport.create(doc);
       });
 
-      it("should return an array of action", () => {
+      it("should return an array of actions", () => {
         const subject = CaseReport.actions(caseReport);
         expect(subject.length).to.equal(94);
       });
@@ -85,6 +85,11 @@ describe('CaseReport', () => {
         expect(subject.description).to
           .equal('HEARING RE: DOMESTIC VIOLENCE PROGRESS.');
         expect(subject.disposition).to.equal('ACTIVE');
+      });
+
+      it("should find deadlines", () => {
+        const subject = CaseReport.deadlines(caseReport);
+        expect(subject.length).to.equal(4);
       });
 
       it("should parse probation information", () => {
@@ -116,10 +121,11 @@ describe('CaseReport', () => {
         expect(subject[3].description).to.include('ENROLLMENT - DOMESTIC VIOLENCE');
       });
 
-      it("should find deadlines", () => {
-        const subject = CaseReport.deadlines(caseReport);
-        expect(subject.length).to.equal(4);
+      it("should find sentencing memoranda", () => {
+        const subject = CaseReport.sentencingMemoranda(caseReport);
+        expect(subject[0].description).to.include('SENTENCING MEMORANDUM');
       });
+
     });
   });
 });
