@@ -6,7 +6,7 @@ prepping ja calendars
 javascript:(function(){
     document.getElementsByTagName('body')[0]
     .appendChild(document.createElement('script'))
-    .src='https://rawgit.com/jluckyiv/ja_prep/master/dist/bundle.js?'+Math.random();
+    .src='https://cdn.jsdelivr.net/gh/jluckyiv/ja_prep@master/dist/bundle.js?'+Math.random();
 }());
 ```
 
@@ -15,7 +15,7 @@ javascript:(function(){
 javascript:(function(){
     document.getElementsByTagName('body')[0]
     .appendChild(document.createElement('script'))
-    .src='https://cdn.rawgit.com/jluckyiv/ja_prep/7badb987/dist/bundle.js?'+Math.random();
+    .src='https://cdn.jsdelivr.net/gh/jluckyiv/ja_prep@7badb987/dist/bundle.js?'+Math.random();
 }());
 ```
 
@@ -27,7 +27,7 @@ javascript:(function() {
   elmDiv.id="elm";
 
   var elmJs = document.createElement("script");
-  elmJs.src="https://rawgit.com/jluckyiv/ja_prep/master/elm.js"+Math.random();
+  elmJs.src="https://cdn.jsdelivr.net/gh/jluckyiv/ja_prep@master/elm.js"+Math.random();
   elmJs.onload=function() {
      var node = document.getElementById('elm');
      Elm.App.embed(node);

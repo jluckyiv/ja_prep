@@ -1,4 +1,4 @@
-var url =  'https://rawgit.com/jluckyiv/ja_prep/master/elm.js?'
+var url =  'https://cdn.jsdelivr.net/gh/jluckyiv/ja_prep@master/elm.js?'
 var source = url + Math.random();
 var divId = 'elm';
 var scriptId = 'elm-script';

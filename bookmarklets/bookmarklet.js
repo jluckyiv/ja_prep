@@ -1,4 +1,4 @@
-var url = 'https://rawgit.com/jluckyiv/ja_prep/master/dist/bundle.js?';
+var url = 'https://cdn.jsdelivr.net/gh/jluckyiv/ja_prep@master/dist/bundle.js?';
 var source = url + Math.random();
 var id = 'ja_prep';
 var body = document.getElementsByTagName('body')[0];
